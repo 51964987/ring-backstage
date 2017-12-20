@@ -1,0 +1,18 @@
+{  
+    "bPaginate" : true,
+    "bStateSave" : true,     
+    "bScrollCollapse" : true,   
+    "bLengthChange" : true,   
+    "bFilter" : false,   
+    "bSort" : false,   
+    "bInfo" : true,   
+    "bAutoWidth" : false,  
+    "bJQueryUI" : false,  
+    "bDestroy" : true,  
+    "bProcessing" : true,  
+    "bServerSide": true,
+    "sAjaxSource" : "",
+    "sServerMethod":"POST",
+    "sDom":"<\"H\">t<\"F\"ifl>p",
+    "aoColumns" : []
+}

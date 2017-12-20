@@ -1,0 +1,14 @@
+
+div.dataTables_length {
+    padding-top:10px;
+    padding-left:5px;
+} 
+div.dataTables_filter {
+    float: right;
+} 
+div.dataTables_info {
+    float: left;
+} 
+div.dataTables_paginate {
+    float: right;
+}
