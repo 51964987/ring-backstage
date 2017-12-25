@@ -10,8 +10,13 @@ public enum ResultCode {
 	/** 会话不存在或已超时 */
 	SESSION_ERROR("10100","会话不存在或已超时"),
 	
+	/** 不存在的信息 */
+	UNEXISTS_INFO_ERROR("10200","不存在的信息"),
 	/** 会话不存在或已超时 */
-	UNEXISTS_OFFICE_ERROR("10200","会话不存在或已超时"),
+	UNEXISTS_OFFICE_ERROR("10201","会话不存在或已超时"),
+	
+	/** 用户已存在 */
+	EXISTS_USER_ERROR("10300","用户已存在"),
 	
 	/** 参数出错 */
 	PARAMETER_ERROR("11100","参数出错");

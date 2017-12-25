@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ringbackstage.web.dao.user.AdminUserMapper">
+	
+	<!-- 增加 -->
+	<insert id="add" parameterType="ringbackstage.web.model.user.AdminUser">
+		INSERT INTO admin_user (id,name,office_id,login_name,password,salt,create_date,create_by,update_date,update_by,remarks,del_flag)
+		VALUES(#{id},#{name},#{officeId},#{loginName},#{password},#{salt},#{createDate},#{createBy},#{updateDate},#{updateBy},#{remarks},#{delFlag})
+	</insert>
+
+	<!-- 删除 -->
+	<update id="delete" parameterType="ringbackstage.web.model.user.AdminUser">
+		UPDATE admin_user SET
+		del_flag = '1',
+		update_date = #{updateDate},
+		update_by = #{updateBy}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="ringbackstage.web.model.user.AdminUser">
+		UPDATE admin_user SET
+		name = #{name},
+		update_date = #{updateDate},
+		update_by = #{updateBy},
+		remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 未删除的列表 -->
+	<select id="findList" resultType="ringbackstage.web.model.user.AdminUser" resultMap="adminUserResultMap">
+		SELECT t.*,t.id as oper,o.name as office_name FROM admin_user t
+		LEFT JOIN admin_office o ON t.office_id = o.id
+		WHERE t.del_flag &lt;&gt; 1
+		<if test=" name != null and name != '' ">
+			AND t.name like '%${name}%'
+		</if>
+		<if test=" officeId != null and officeId != '' ">
+			AND t.office_id like #{officeId}
+		</if>
+		ORDER BY t.create_date DESC
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="findById" resultType="ringbackstage.web.model.user.AdminUser" resultMap="adminUserResultMap">
+		SELECT t.*,t.id as oper,o.name as office_name FROM admin_user t
+		LEFT JOIN admin_office o ON t.office_id = o.id
+		WHERE t.id = #{id}
+	</select>
+	
+	<!-- 映射 -->
+	<resultMap type="ringbackstage.web.model.user.AdminUser" id="adminUserResultMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="officeId" column="office_id" />
+		<result property="officeName" column="office_name" />
+		<result property="loginName" column="login_name" />
+		<result property="password" column="password" />
+		<result property="salt" column="salt" />
+		<result property="createDate" column="create_date" />
+		<result property="createBy" column="create_by" />
+		<result property="updateDate" column="update_date" />
+		<result property="updateBy" column="update_by" />
+		<result property="remarks" column="remarks" />
+		<result property="delFlag" column="del_flag" />
+	</resultMap>
+</mapper>

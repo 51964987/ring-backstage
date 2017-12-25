@@ -23,7 +23,7 @@ import ringbackstage.common.interceptor.RequestLocal;
 import ringbackstage.common.utils.page.DataTableResultHelper;
 import ringbackstage.common.utils.result.ResultGenerator;
 import ringbackstage.web.model.office.AdminOffice;
-import ringbackstage.web.service.OfficeService;
+import ringbackstage.web.service.office.OfficeService;
 
 @RequestMapping({"/office"})
 @Controller
@@ -53,7 +53,6 @@ public class OfficeController {
 		}
 		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
 	}
-
 	//--/增加--//
 	
 	private void setParentIds(AdminOffice office) throws ResultException {

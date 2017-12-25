@@ -1,39 +1,45 @@
+
 <!DOCTYPE HTML>
 <html>
 <#include "/public/head.ftl" />
 <@head 
 links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css"]
-></@head>
+></@head >
 <body>
 <#assign id="" />
-<#assign parentId="" />
-<#if office?exists>
-<#assign id="${office.id}" />
-<#assign parentId="${office.parentId}" />
+<#assign officeId="" />
+<#if user?exists>
+<#assign id="${user.id}" />
+<#assign officeId="${user.officeId}" />
 </#if>
-
 <article class="page-container">
-	<form action="" method="post" class="form form-horizontal" id="form-office">
-		<input type="hidden" class="input-text" <#if office?exists>value="${office.id}"</#if> placeholder="" name="id">
+	<form action="" method="post" class="form form-horizontal" id="form-user">
+		<input type="hidden" class="input-text" <#if user?exists>value="${user.id}"</#if> placeholder="" name="id">
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>机构名称：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>登录名：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="text" class="input-text" <#if office?exists>value="${office.name}"</#if> placeholder="" name="name">
+				<input type="text" class="input-text" <#if user?exists>readonly="readonly" value="${user.loginName}"</#if> placeholder="" name="loginName">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>排序：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>姓名：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="number" min="1" class="input-text" style="width:100%" <#if office?exists>value="${(office.sort)?c}"</#if> placeholder="" name="sort">
+				<input type="text" class="input-text" <#if user?exists>value="${user.name}"</#if> placeholder="" name="name">
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">上级机构：</label>
+			<label class="form-label col-xs-2 col-sm-2">所属机构：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="text" class="input-text" readonly="readonly" <#if office?exists><#if (office.parentName)?exists>value="${office.parentName}"</#if></#if> placeholder="" name="parentName" id="parentName">
-				<input type="hidden" class="input-text" readonly="readonly" <#if office?exists>value="${office.parentId}"</#if> placeholder="" name="parentId" id="parentId">
+				<input type="text" class="input-text" readonly="readonly" <#if user?exists && (user.officeName)?exists >value="${user.officeName}"</#if> placeholder="" name="officeName" id="officeName">
+				<input type="hidden" class="input-text" <#if user?exists>value="${user.officeId}"</#if> placeholder="" name="officeId" id="officeId">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2">&nbsp;</label>
+			<label class="form-label col-xs-2 col-sm-2">所属机构：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				&nbsp;
+				<span class="select-box">
+				<select class="select" size="1" name="userType">
+					<option value="" selected>请选择</option>
+					<option value="2">业务用户</option>
+					<option value="1">管理用户</option>
+				</select>
+				</span>
 			</div>
 		</div>
 		<div class="row cl">
@@ -62,19 +68,12 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 
 <script type="text/javascript">
 $(function(){
-	<#if RequestParameters['oper']?exists>
-		<#if "add" == RequestParameters['oper']>
-		$("#parentId").val(parent.$("#parentId").val());
-		$("#parentName").val(parent.$("#parentName").val());
-		</#if>
-	</#if>
-	
-	$("#form-office").validate({
+	$("#form-user").validate({
 		rules:{
 			name:{
 				required:true
 			},
-			sort:{
+			loginName:{
 				required:true
 			}
 		},
@@ -85,8 +84,8 @@ $(function(){
 			$.ajax({
 				"dataType":"json",
 				"type":"post",
-				"url":"${springMacroRequestContext.contextPath}/office/${url}/",
-				"data":$("#form-office").serialize(),
+				"url":"${springMacroRequestContext.contextPath}/user/${url}/",
+				"data":$("#form-user").serialize(),
 				"success":function(rd){
 					if(rd.code&&rd.code==200){
 						layer.msg("保存成功!",{icon:1,time:1000},function(){						
@@ -109,18 +108,16 @@ $(function(){
 <@ztree id="treeDemo" 
 url="${springMacroRequestContext.contextPath}/office/selecttree"
 select="true"
-selectId="parentName"
+selectId="officeName"
 checkEnable="true"
 checkRadio="true"
-autoParam=[]
-otherParam=["\"id\"","\"${id}\"","\"parentId\"","\"${parentId}\""]
+otherParam=["\"parentId\"","\"${officeId}\""]
 >
 </@ztree>
 <script>
 /*单击选中*/
 function onClick_treeDemo(event,treeId,treeNodes){
-	$("#parentId").val(treeNodes.id);
-	$("#parentName").val(treeNodes.name);
+	beforeCheckCallback_treeDemo(treeId,treeNodes);
 	var treeobj = $.fn.zTree.getZTreeObj("treeDemo");
 	var checkNodes = treeobj.getCheckedNodes(true);
 	if(checkNodes.length>0){
@@ -132,8 +129,8 @@ function onClick_treeDemo(event,treeId,treeNodes){
 }
 /*radio勾选选中*/
 function beforeCheckCallback_treeDemo(treeId,treeNodes){
-	$("#parentId").val(treeNodes.id);
-	$("#parentName").val(treeNodes.name);	
+	$("#officeId").val(treeNodes.id);
+	$("#officeName").val(treeNodes.name);	
 }
 </script>
 </body>

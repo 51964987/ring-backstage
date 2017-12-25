@@ -1,4 +1,4 @@
-package ringbackstage.web.service;
+package ringbackstage.web.service.office;
 
 import java.util.List;
 

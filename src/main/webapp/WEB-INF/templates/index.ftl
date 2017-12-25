@@ -55,6 +55,7 @@
 			<dd>
 				<ul>
 					<li><a data-href="${springMacroRequestContext.contextPath}/office/index" data-title="机构管理" href="javascript:void(0)">机构管理</a></li>
+					<li><a data-href="${springMacroRequestContext.contextPath}/user/index" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
 			</ul>
 		</dd>
 	</dl>
