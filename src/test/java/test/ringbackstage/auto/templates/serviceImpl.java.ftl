@@ -78,4 +78,14 @@ public class ${serviceImplClassName} implements ${serviceClassName}{
 			throw new ResultException(ResultCode.SERVER_ERROR);
 		}
 	}
+	
+	@Override
+	public List<${beanName}> trees(${beanName} ${beanName?uncap_first})  throws ResultException {
+		try {
+			return ${mapperClassName?uncap_first}.trees(${beanName?uncap_first});
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			throw new ResultException(ResultCode.SERVER_ERROR);
+		}
+	}
 }

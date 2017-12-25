@@ -33,6 +33,9 @@
 		<if test=" name != null and name != '' ">
 			AND t.name like '%${r'${name}'}%'
 		</if>
+		<if test=" parentId != null and parentId != '' ">
+			AND (FIND_IN_SET(${r'#{parentId}'},t.parent_ids) > 0 OR t.id = ${r'#{parentId}'} )
+		</if>
 		ORDER BY t.create_date DESC
 	</select>
 	
@@ -40,6 +43,19 @@
 	<select id="findById" resultType="${beanPackage}.${beanName}" resultMap="${beanName?uncap_first}ResultMap">
 		SELECT t.*,t.id as oper FROM ${tableName} t
 		WHERE t.id = ${r'#{id}'}
+	</select>
+	
+	<!-- 左边树形 -->
+	<select id="trees" resultType="${beanPackage}.${beanName}" resultMap="${beanName?uncap_first}ResultMap">
+		SELECT * FROM ${tableName}
+		WHERE del_flag &lt;&gt; 1
+		<if test=" parentId != null and parentId != '' ">
+			AND parent_id = ${r'#{parentId}'}
+		</if>
+		<if test=" parentId == null or parentId == '' ">
+			AND (parent_id IS NULL OR parent_id = '')
+		</if>		
+		ORDER BY sort,create_date DESC
 	</select>
 	
 	<!-- 映射 -->

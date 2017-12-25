@@ -1,38 +1,87 @@
 DROP TABLE IF EXISTS `admin_office`;
 CREATE TABLE `admin_office`(
-	`id` varchar(64) NOT NULL COMMENT '±àºÅ',
-	`name` varchar(64) NOT NULL COMMENT '»ú¹¹Ãû³Æ',
-	`parent_id` varchar(64) DEFAULT NULL COMMENT 'ÉÏ¼¶±àºÅ',
-	`parent_ids` varchar(2000) DEFAULT NULL COMMENT 'ËùÓĞ¸¸¼¶±àºÅ',
-	`sort` decimal(10,0) DEFAULT NULL COMMENT 'ÅÅĞò',
-	`create_date` datetime NOT NULL COMMENT '´´½¨Ê±¼ä',
-	`create_by` varchar(64) NOT NULL COMMENT '´´½¨ÈË',
-	`update_date` datetime DEFAULT NULL COMMENT 'ĞŞ¸ÄÊ±¼ä',
-	`update_by` varchar(64) DEFAULT NULL COMMENT 'ĞŞ¸ÄÈË',
-	`remarks` varchar(255) DEFAULT NULL COMMENT '±¸×¢',
-	`del_flag` char(1) NOT NULL COMMENT '±¸×¢',
+	`id` varchar(64) NOT NULL COMMENT 'ç¼–å·',
+	`name` varchar(64) NOT NULL COMMENT 'æœºæ„åç§°',
+	`parent_id` varchar(64) DEFAULT NULL COMMENT 'ä¸Šçº§ç¼–å·',
+	`parent_ids` varchar(2000) DEFAULT NULL COMMENT 'æ‰€æœ‰çˆ¶çº§ç¼–å·',
+	`sort` decimal(10,0) DEFAULT NULL COMMENT 'æ’åº',
+	`create_date` datetime NOT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+	`create_by` varchar(64) NOT NULL COMMENT 'åˆ›å»ºäºº',
+	`update_date` datetime DEFAULT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
+	`update_by` varchar(64) DEFAULT NULL COMMENT 'ä¿®æ”¹äºº',
+	`remarks` varchar(255) DEFAULT NULL COMMENT 'å¤‡æ³¨',
+	`del_flag` char(1) NOT NULL COMMENT 'æ˜¯å¦å¯ç”¨',
 	PRIMARY KEY (`id`),
 	KEY `admin_office_parent_id` (`parent_id`),
 	KEY `admin_office_del_flag` (`del_flag`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='»ú¹¹±í';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='æœºæ„è¡¨';
 
 DROP TABLE IF EXISTS `admin_user`;
 CREATE TABLE `admin_user`(
-	`id` varchar(64) NOT NULL COMMENT '±àºÅ',
-	`name` varchar(100) NOT NULL COMMENT 'ĞÕÃû',
-	`office_id` varchar(64) DEFAULT NULL COMMENT 'ËùÊô»ú¹¹',
-	`login_name` varchar(100) NOT NULL COMMENT 'µÇÂ¼Ãû',
-	`password` varchar(100) DEFAULT NULL COMMENT 'µÇÂ¼ÃÜÂë',
-	`salt` varchar(100) DEFAULT NULL COMMENT 'ÃÜÂëÑÎ',
-	`user_type` char(1) DEFAULT NULL COMMENT 'ÓÃ»§ÀàĞÍ',
-	`create_date` datetime NOT NULL COMMENT '´´½¨Ê±¼ä',
-	`create_by` varchar(64) NOT NULL COMMENT '´´½¨ÈË',
-	`update_date` datetime DEFAULT NULL COMMENT 'ĞŞ¸ÄÊ±¼ä',
-	`update_by` varchar(64) DEFAULT NULL COMMENT 'ĞŞ¸ÄÈË',
-	`remarks` varchar(255) DEFAULT NULL COMMENT '±¸×¢',
-	`del_flag` char(1) NOT NULL COMMENT 'ÊÇ·ñÉ¾³ı',
+	`id` varchar(64) NOT NULL COMMENT 'ç¼–å·',
+	`name` varchar(100) NOT NULL COMMENT 'å§“å',
+	`office_id` varchar(64) DEFAULT NULL COMMENT 'æ‰€å±æœºæ„',
+	`login_name` varchar(100) NOT NULL COMMENT 'ç™»å½•å',
+	`password` varchar(100) DEFAULT NULL COMMENT 'ç™»å½•å¯†ç ',
+	`salt` varchar(100) DEFAULT NULL COMMENT 'å¯†ç ç›',
+	`user_type` char(1) DEFAULT NULL COMMENT 'ç”¨æˆ·ç±»å‹ï¼Œ1ï¼šç®¡ç†ç”¨æˆ·2ï¼šä¸šåŠ¡ç”¨æˆ·',
+	`create_date` datetime NOT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+	`create_by` varchar(64) NOT NULL COMMENT 'åˆ›å»ºäºº',
+	`update_date` datetime DEFAULT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
+	`update_by` varchar(64) DEFAULT NULL COMMENT 'ä¿®æ”¹äºº',
+	`remarks` varchar(255) DEFAULT NULL COMMENT 'å¤‡æ³¨',
+	`del_flag` char(1) NOT NULL COMMENT 'æ˜¯å¦åˆ é™¤',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY(`login_name`),
 	KEY `admin_user_office_id` (`office_id`),
 	KEY `admin_user_del_flag` (`del_flag`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ÓÃ»§±í';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·è¡¨';
+
+DROP TABLE IF EXISTS `admin_resource`;
+CREATE TABLE `admin_resource`(
+	`id` varchar(64) NOT NULL COMMENT 'ç¼–å·',
+	`name` varchar(64) NOT NULL COMMENT 'èµ„æºåç§°',
+	`parent_id` varchar(64) DEFAULT NULL COMMENT 'ä¸Šçº§ç¼–å·',
+	`parent_ids` varchar(2000) DEFAULT NULL COMMENT 'æ‰€æœ‰çˆ¶çº§ç¼–å·',
+	`sort` decimal(10,0) DEFAULT NULL COMMENT 'æ’åº',
+	`create_date` datetime NOT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+	`create_by` varchar(64) NOT NULL COMMENT 'åˆ›å»ºäºº',
+	`update_date` datetime DEFAULT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
+	`update_by` varchar(64) DEFAULT NULL COMMENT 'ä¿®æ”¹äºº',
+	`remarks` varchar(255) DEFAULT NULL COMMENT 'å¤‡æ³¨',
+	`del_flag` char(1) NOT NULL COMMENT 'æ˜¯å¦å¯ç”¨',
+	`back_flag` char(1) NOT NULL COMMENT 'æ˜¯å¦åå°åº”ç”¨,1:åå°ç®¡ç†ï¼Œ0ï¼šä¸šåŠ¡åº”ç”¨',
+	PRIMARY KEY (`id`),
+	KEY `admin_resource_parent_id` (`parent_id`),
+	KEY `admin_resource_del_flag` (`del_flag`),
+	KEY `admin_resource_back_flag` (`back_flag`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='èµ„æºè¡¨';
+
+DROP TABLE IF EXISTS `admin_role`;
+CREATE TABLE `admin_role`(
+	`id` varchar(64) NOT NULL COMMENT 'ç¼–å·',
+	`name` varchar(64) NOT NULL COMMENT 'è§’è‰²åç§°',
+	`sort` decimal(10,0) DEFAULT NULL COMMENT 'æ’åº',
+	`create_date` datetime NOT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+	`create_by` varchar(64) NOT NULL COMMENT 'åˆ›å»ºäºº',
+	`update_date` datetime DEFAULT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
+	`update_by` varchar(64) DEFAULT NULL COMMENT 'ä¿®æ”¹äºº',
+	`remarks` varchar(255) DEFAULT NULL COMMENT 'å¤‡æ³¨',
+	`del_flag` char(1) NOT NULL COMMENT 'æ˜¯å¦å¯ç”¨',
+	PRIMARY KEY (`id`),
+	KEY `admin_role_del_flag` (`del_flag`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='è§’è‰²è¡¨';
+
+DROP TABLE IF EXISTS `admin_role_resource`;
+CREATE TABLE `admin_role_resource`(
+	`role_id` varchar(64) NOT NULL COMMENT 'è§’è‰²ID',
+	`resource_id` varchar(64) NOT NULL COMMENT 'èµ„æºID',
+	PRIMARY KEY (`role_id`ï¼Œ`resource_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='è§’è‰²-èµ„æº';
+
+DROP TABLE IF EXISTS `admin_user_role`;
+CREATE TABLE `admin_user_role`(
+	`user_id` varchar(64) NOT NULL COMMENT 'ç”¨æˆ·ID',
+	`role_id` varchar(64) NOT NULL COMMENT 'è§’è‰²ID',
+	PRIMARY KEY (`user_id`,`role_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·-è§’è‰²';

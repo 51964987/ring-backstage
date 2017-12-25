@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ringbackstage.web.dao.resource.AdminResourceMapper">
+	
+	<!-- 增加 -->
+	<insert id="add" parameterType="ringbackstage.web.model.resource.AdminResource">
+		INSERT INTO admin_resource (id,name,parent_id,parent_ids,sort,create_date,create_by,update_date,update_by,remarks,del_flag,back_flag)
+		VALUES(#{id},#{name},#{parentId},#{parentIds},#{sort},#{createDate},#{createBy},#{updateDate},#{updateBy},#{remarks},#{delFlag},#{backFlag})
+	</insert>
+
+	<!-- 删除 -->
+	<update id="delete" parameterType="ringbackstage.web.model.resource.AdminResource">
+		UPDATE admin_resource SET
+		del_flag = '1',
+		update_date = #{updateDate},
+		update_by = #{updateBy}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="ringbackstage.web.model.resource.AdminResource">
+		UPDATE admin_resource SET
+		name = #{name},
+		sort = #{sort},
+		back_flag = #{backFlag},
+		parent_id = #{parentId},
+		parent_ids = #{parentIds},
+		update_date = #{updateDate},
+		update_by = #{updateBy},
+		remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 未删除的列表 -->
+	<select id="findList" resultType="ringbackstage.web.model.resource.AdminResource" resultMap="adminResourceResultMap">
+		SELECT t.*,t.id as oper,p.name as parent_name FROM admin_resource t
+		LEFT JOIN admin_resource p ON t.parent_id = p.id
+		WHERE t.del_flag &lt;&gt; 1
+		<if test=" name != null and name != '' ">
+			AND t.name like '%${name}%'
+		</if>
+		<if test=" parentId != null and parentId != '' ">
+			AND (FIND_IN_SET(#{parentId},t.parent_ids) > 0 OR t.id = #{parentId} )
+		</if>
+		ORDER BY t.create_date DESC
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="findById" resultType="ringbackstage.web.model.resource.AdminResource" resultMap="adminResourceResultMap">
+		SELECT t.*,t.id as oper,p.name as parent_name FROM admin_resource t
+		LEFT JOIN admin_resource p ON t.parent_id = p.id
+		WHERE t.id = #{id}
+	</select>
+	
+	<!-- 左边树形 -->
+	<select id="trees" resultType="ringbackstage.web.model.resource.AdminResource" resultMap="adminResourceResultMap">
+		SELECT * FROM admin_resource
+		WHERE del_flag &lt;&gt; 1
+		<if test=" parentId != null and parentId != '' ">
+			AND parent_id = #{parentId}
+		</if>
+		<if test=" parentId == null or parentId == '' ">
+			AND (parent_id IS NULL OR parent_id = '')
+		</if>		
+		ORDER BY sort,create_date DESC
+	</select>
+	
+	<!-- 映射 -->
+	<resultMap type="ringbackstage.web.model.resource.AdminResource" id="adminResourceResultMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="parentId" column="parent_id" />
+		<result property="parentName" column="parent_name" />
+		<result property="parentIds" column="parent_ids" />
+		<result property="sort" column="sort" />
+		<result property="createDate" column="create_date" />
+		<result property="createBy" column="create_by" />
+		<result property="updateDate" column="update_date" />
+		<result property="updateBy" column="update_by" />
+		<result property="remarks" column="remarks" />
+		<result property="delFlag" column="del_flag" />
+		<result property="backFlag" column="back_flag" />
+	</resultMap>
+</mapper>

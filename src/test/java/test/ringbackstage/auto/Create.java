@@ -44,9 +44,9 @@ public class Create {
 		JDBCUtil.init("application.properties", driver,url,username,password);
 		data = new HashMap<>();
 		
-		String model = "user";
-		String modelName = "用户";
-		String tableName = "admin_user";
+		String model = "resource";
+		String modelName = "资源";
+		String tableName = "admin_resource";
 		
 		String beanName = StringUtils.capitalize(StringUtil.underline2capitalize(tableName));
 		List<JSONObject> cols = JDBCMetaHelper.listColumns(tableName);

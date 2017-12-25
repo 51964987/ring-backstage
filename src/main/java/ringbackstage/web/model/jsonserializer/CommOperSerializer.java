@@ -41,7 +41,7 @@ public class CommOperSerializer extends JsonSerializer<String>{
 			sb.append("&nbsp;&nbsp;<a style=\"text-decoration:none\" onClick=\"oper_delete(this,'"+idValue+"')\" href=\"javascript:;\" title=\"删除\"><i class=\"Hui-iconfont\">&#xe6e2;</i></a>");
 			
 			//System.out.println("======="+RequestLocal.getRequest().get().getRequestURI());
-			System.out.println(idValue);
+			//System.out.println(idValue);
 			jg.writeString(sb.toString());
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);

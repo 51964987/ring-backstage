@@ -1,4 +1,4 @@
-package ${controllerPackage};
+package ringbackstage.web.controller.resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,33 +21,33 @@ import ringbackstage.common.exception.ResultException;
 import ringbackstage.common.interceptor.RequestLocal;
 import ringbackstage.common.utils.page.DataTableResultHelper;
 import ringbackstage.common.utils.result.ResultGenerator;
-import ${beanPackage}.${beanName};
-import ${servicePackage}.${serviceClassName};
+import ringbackstage.web.model.resource.AdminResource;
+import ringbackstage.web.service.resource.AdminResourceService;
 import org.apache.commons.lang3.StringUtils;
 
-@RequestMapping({"/${model}"})
+@RequestMapping({"/resource"})
 @Controller
-public class ${controllerClassName} {
+public class AdminResourceController {
 	
 	@Autowired
-	${serviceClassName} ${serviceClassName?uncap_first};
+	AdminResourceService adminResourceService;
 	
 	//--增加--//
 	@RequestMapping(value="add",method=RequestMethod.GET)
 	public String add(Map<String , Object> model){
-		model.put("${model}", null);
+		model.put("resource", null);
 		model.put("url", "add");
-		return "${model}/${model}oper";
+		return "resource/resourceoper";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="add",method=RequestMethod.POST)
-	public Object addOper(${beanName} ${beanName?uncap_first}){
+	public Object addOper(AdminResource adminResource){
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			setParentIds(${beanName?uncap_first});
-			data = ${serviceClassName?uncap_first}.add(${beanName?uncap_first},RequestLocal.getUser().get());
+			setParentIds(adminResource);
+			data = adminResourceService.add(adminResource,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
 		}
@@ -55,13 +55,13 @@ public class ${controllerClassName} {
 	}
 
 	//--/增加--//
-	private void setParentIds(${beanName} ${beanName?uncap_first}) throws ResultException {
-		if(StringUtils.isNotEmpty(${beanName?uncap_first}.getParentId())){
-			${beanName} parent = ${serviceClassName?uncap_first}.findById(${beanName?uncap_first}.getParentId());
+	private void setParentIds(AdminResource adminResource) throws ResultException {
+		if(StringUtils.isNotEmpty(adminResource.getParentId())){
+			AdminResource parent = adminResourceService.findById(adminResource.getParentId());
 			if(StringUtils.isEmpty(parent.getParentIds())){
-				${beanName?uncap_first}.setParentIds(${beanName?uncap_first}.getParentId());
+				adminResource.setParentIds(adminResource.getParentId());
 			}else{
-				${beanName?uncap_first}.setParentIds(StringUtils.join(${beanName?uncap_first}.getParentId(),",",parent.getParentIds()));
+				adminResource.setParentIds(StringUtils.join(adminResource.getParentId(),",",parent.getParentIds()));
 			}
 		}
 	}	
@@ -72,9 +72,9 @@ public class ${controllerClassName} {
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			${beanName} ${beanName?uncap_first} = ${serviceClassName?uncap_first}.findById(id);
-			if(${beanName?uncap_first} != null){				
-				data = ${serviceClassName?uncap_first}.delete(${beanName?uncap_first},RequestLocal.getUser().get());
+			AdminResource adminResource = adminResourceService.findById(id);
+			if(adminResource != null){				
+				data = adminResourceService.delete(adminResource,RequestLocal.getUser().get());
 			}else{
 				resultCode = ResultCode.UNEXISTS_INFO_ERROR;
 			}
@@ -88,18 +88,18 @@ public class ${controllerClassName} {
 	//--修改--//
 	@RequestMapping(value="update/{id}",method=RequestMethod.GET)
 	public String update(@PathVariable String id,Map<String , Object> model) throws ResultException{
-		model.put("${model}", ${serviceClassName?uncap_first}.findById(id));
+		model.put("resource", adminResourceService.findById(id));
 		model.put("url", "update");
-		return "${model}/${model}oper";
+		return "resource/resourceoper";
 	}
 	@ResponseBody
 	@RequestMapping(value="update",method=RequestMethod.POST)
-	public Object update(${beanName} ${beanName?uncap_first}){
+	public Object update(AdminResource adminResource){
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			setParentIds(${beanName?uncap_first});
-			data = ${serviceClassName?uncap_first}.update(${beanName?uncap_first},RequestLocal.getUser().get());
+			setParentIds(adminResource);
+			data = adminResourceService.update(adminResource,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
 		}
@@ -110,20 +110,20 @@ public class ${controllerClassName} {
 	//--未删除的列表--//
 	@RequestMapping({"/index"})
 	public String index(){
-		return "${model}/${model}index";
+		return "resource/resourceindex";
 	}
 	
 	@ResponseBody
-	@RequestMapping({"/find${model}"})
+	@RequestMapping({"/findresource"})
 	public Object findList(
 			@RequestParam(required=false)Integer sEcho,
 			@RequestParam(required=false)Integer iDisplayStart,
 			@RequestParam(required=false)Integer iDisplayLength,
-			${beanName} ${beanName?uncap_first}
+			AdminResource adminResource
 			) throws ResultException{
 		PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
-		List<${beanName}> list = ${serviceClassName?uncap_first}.findList(${beanName?uncap_first});
-		PageInfo<${beanName}> pageInfo = new PageInfo<>(list);
+		List<AdminResource> list = adminResourceService.findList(adminResource);
+		PageInfo<AdminResource> pageInfo = new PageInfo<>(list);
 		return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
 	}
 	//--/未删除的列表--//
@@ -131,17 +131,17 @@ public class ${controllerClassName} {
 	//--左边树形--//	
 	@ResponseBody
 	@RequestMapping({"/trees"})
-	public Object trees(${beanName} ${beanName?uncap_first}) throws ResultException{
+	public Object trees(AdminResource adminResource) throws ResultException{
 		
-		if("-1".equals(${beanName?uncap_first}.getParentId())){
-			${beanName?uncap_first}.setParentId("");
+		if("-1".equals(adminResource.getParentId())){
+			adminResource.setParentId("");
 		}
 		
-		List<${beanName}> list = ${serviceClassName?uncap_first}.trees(${beanName?uncap_first});
+		List<AdminResource> list = adminResourceService.trees(adminResource);
 		List<Map<String, Object>> ztreeDatas = new ArrayList<>();
 		Map<String, Object> data = null;
 		if(list!= null && list.size()>0){
-			for(${beanName} ao : list){
+			for(AdminResource ao : list){
 				data = new HashMap<>();
 				data.put("id", ao.getId());
 				data.put("pId", StringUtils.isEmpty(ao.getParentId())?"-1":ao.getParentId());
@@ -161,11 +161,11 @@ public class ${controllerClassName} {
 	@RequestMapping({"/selecttree"})
 	public Object selecttree(String id,String parentId) throws ResultException{
 				
-		List<${beanName}> list = ${serviceClassName?uncap_first}.trees(null);
+		List<AdminResource> list = adminResourceService.trees(null);
 		List<Map<String, Object>> ztreeDatas = new ArrayList<>();
 		Map<String, Object> data = null;
 		if(list!= null && list.size()>0){
-			for(${beanName} ao : list){
+			for(AdminResource ao : list){
 				data = new HashMap<>();
 				data.put("id", ao.getId());
 				data.put("pId", StringUtils.isEmpty(ao.getParentId())?"-1":ao.getParentId());
@@ -178,7 +178,7 @@ public class ${controllerClassName} {
 					ztreeDatas.add(data);
 				}
 				
-				${beanName} ar = new ${beanName}();
+				AdminResource ar = new AdminResource();
 				ar.setParentId(ao.getId());
 				findchild(id, parentId, ar, data, ztreeDatas);
 			}
@@ -186,14 +186,14 @@ public class ${controllerClassName} {
 		return ztreeDatas;
 	}
 	
-	public Object findchild(String id,String parentId,${beanName} resource,
+	public Object findchild(String id,String parentId,AdminResource resource,
 			Map<String, Object> parentData,List<Map<String, Object>> ztreeDatas) throws ResultException{
 		
 		Map<String, Object> data = null;
-		List<${beanName}> dataResult = ${serviceClassName?uncap_first}.trees(resource);
+		List<AdminResource> dataResult = adminResourceService.trees(resource);
 		if(dataResult!= null && dataResult.size()>0){
 			parentData.put("isParent", true);
-			for(${beanName} ao : dataResult){
+			for(AdminResource ao : dataResult){
 				data = new HashMap<>();
 				data.put("id", ao.getId());
 				data.put("pId", StringUtils.isEmpty(ao.getParentId())?"-1":ao.getParentId());
@@ -206,7 +206,7 @@ public class ${controllerClassName} {
 					ztreeDatas.add(data);
 				}
 				
-				${beanName} ar = new ${beanName}();
+				AdminResource ar = new AdminResource();
 				ar.setParentId(ao.getId());
 				findchild(id, parentId, ar, data, ztreeDatas);
 			}

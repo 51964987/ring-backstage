@@ -57,6 +57,12 @@ links=["${r'${springMacroRequestContext.contextPath}'}/lib/zTree/v3/css/zTreeSty
 <script type="text/javascript">
 $(function(){
 	
+	<#if RequestParameters['oper']?exists>
+		<#if "add" == RequestParameters['oper']>
+		$("#parentId").val(parent.$("#parentId").val());
+		$("#parentName").val(parent.$("#parentName").val());
+		</#if>
+	</#if>
 	
 	$("#form-${model}").validate({
 		rules:{<#assign requireds = "0" />

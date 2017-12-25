@@ -13,4 +13,5 @@ public interface ${mapperClassName} {
 	int update(${beanName} ${beanName?uncap_first})throws Exception;
 	${beanName} findById(String id)throws Exception;
 	List<${beanName}> findList(${beanName} ${beanName?uncap_first})throws Exception;
+	List<${beanName}> trees(${beanName} ${beanName?uncap_first})throws Exception;
 }

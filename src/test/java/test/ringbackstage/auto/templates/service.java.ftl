@@ -12,4 +12,5 @@ public interface ${serviceClassName} {
 	int update(${beanName} ${beanName?uncap_first},AdminUser loginUser)throws ResultException;
 	${beanName} findById(String id)throws ResultException;
 	List<${beanName}> findList(${beanName} ${beanName?uncap_first})throws ResultException;
+	List<${beanName}> trees(${beanName} ${beanName?uncap_first})throws ResultException;
 }
