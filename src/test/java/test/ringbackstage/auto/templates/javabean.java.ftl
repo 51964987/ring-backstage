@@ -1,4 +1,4 @@
-package ${beanPackage};
+package ${modelPackage};
 
 import java.io.Serializable;
 <#assign coltmp=""/>

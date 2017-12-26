@@ -1,7 +1,5 @@
 package ${controllerPackage};
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +19,13 @@ import ringbackstage.common.exception.ResultException;
 import ringbackstage.common.interceptor.RequestLocal;
 import ringbackstage.common.utils.page.DataTableResultHelper;
 import ringbackstage.common.utils.result.ResultGenerator;
-import ${beanPackage}.${beanName};
+import ${modelPackage}.${beanName};
 import ${servicePackage}.${serviceClassName};
+<#if isCreateTree == true>
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
+</#if>
 
 @RequestMapping({"/${model}"})
 @Controller
@@ -31,7 +33,7 @@ public class ${controllerClassName} {
 	
 	@Autowired
 	${serviceClassName} ${serviceClassName?uncap_first};
-	
+	<#if isCreateADUQ == true>
 	//--增加--//
 	@RequestMapping(value="add",method=RequestMethod.GET)
 	public String add(Map<String , Object> model){
@@ -46,7 +48,7 @@ public class ${controllerClassName} {
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			setParentIds(${beanName?uncap_first});
+			<#if isCreateTree == true>setParentIds(${beanName?uncap_first});</#if>
 			data = ${serviceClassName?uncap_first}.add(${beanName?uncap_first},RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
@@ -55,6 +57,7 @@ public class ${controllerClassName} {
 	}
 
 	//--/增加--//
+	<#if isCreateTree == true>
 	private void setParentIds(${beanName} ${beanName?uncap_first}) throws ResultException {
 		if(StringUtils.isNotEmpty(${beanName?uncap_first}.getParentId())){
 			${beanName} parent = ${serviceClassName?uncap_first}.findById(${beanName?uncap_first}.getParentId());
@@ -65,6 +68,7 @@ public class ${controllerClassName} {
 			}
 		}
 	}	
+	</#if>
 	//--删除--//
 	@ResponseBody
 	@RequestMapping(value="delete/{id}",method=RequestMethod.POST)
@@ -98,7 +102,7 @@ public class ${controllerClassName} {
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			setParentIds(${beanName?uncap_first});
+			<#if isCreateTree == true>setParentIds(${beanName?uncap_first});</#if>
 			data = ${serviceClassName?uncap_first}.update(${beanName?uncap_first},RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
@@ -127,7 +131,7 @@ public class ${controllerClassName} {
 		return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
 	}
 	//--/未删除的列表--//
-	
+	</#if><#if isCreateTree == true>
 	//--左边树形--//	
 	@ResponseBody
 	@RequestMapping({"/trees"})
@@ -216,4 +220,5 @@ public class ${controllerClassName} {
 		return ztreeDatas;
 	}
 	//--/下拉菜单树形，用于增加和修改页面--//	
+	</#if>
 }

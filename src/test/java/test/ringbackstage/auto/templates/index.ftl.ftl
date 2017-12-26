@@ -4,12 +4,13 @@
 ${r'<@'}head 
 links=["${r'${springMacroRequestContext.contextPath}'}/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css","${r'${springMacroRequestContext.contextPath}'}/static/public/ringdatatable.css"]
 >${r'</@'}head>
-
-<body class="pos-r">
+<body <#if isCreateTree == true>class="pos-r"</#if>>
+<#if isCreateTree == true>
 <div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
 	<ul id="treeDemo" class="ztree"></ul>
 </div>
-<div style="margin-left:200px;">
+</#if>
+<div <#if isCreateTree == true>style="margin-left:200px;"</#if>>
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> ${modelName}管理 <span class="c-gray en">&gt;</span> ${modelName}列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<${r'#include'} "/public/datatable.ftl" />
@@ -31,10 +32,11 @@ links=["${r'${springMacroRequestContext.contextPath}'}/lib/zTree/v3/css/zTreeSty
 <script type="text/javascript" src="${r'${springMacroRequestContext.contextPath}'}/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
 <script type="text/javascript" src="${r'${springMacroRequestContext.contextPath}'}/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 <script type="text/javascript" src="${r'${springMacroRequestContext.contextPath}'}/lib/laypage/1.2/laypage.js"></script>
-
+<#if isCreateTree == true>
 <${r'#include'} "/public/ztree.ftl" />
 ${r'<@'}ztree id="treeDemo" url="${r'${springMacroRequestContext.contextPath}'}/${model}/trees">
 ${r'</@'}ztree>
+</#if>
 <${r'#include'} "/public/datatableAjax.ftl" />
 ${r'<@'}datatableAjax 
 controller="${model}"
@@ -43,6 +45,7 @@ aoDataPush=["parentId","name"]
 aoColumns=[<#list cols as col><#if col_index &gt; 0>,</#if>"{'mDataProp':'${col.FIELD_NAME}'}"</#list>]
 refreshTreeId="treeDemo"
 >${r'</@'}datatableAjax>
+<#if isCreateTree == true>
 <script>
 function onClick_treeDemo(event,treeId,treeNodes){
 	$("#parentId").val(treeNodes.id);
@@ -50,5 +53,6 @@ function onClick_treeDemo(event,treeId,treeNodes){
 	fnSearch();
 }
 </script>
+</#if>
 </body>
 </html>
