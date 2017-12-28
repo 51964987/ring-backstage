@@ -14,4 +14,5 @@ public interface AdminResourceMapper {
 	AdminResource findById(String id)throws Exception;
 	List<AdminResource> findList(AdminResource adminResource)throws Exception;
 	List<AdminResource> trees(AdminResource adminResource)throws Exception;
+	List<AdminResource> findTree(AdminResource adminResource)throws Exception;
 }

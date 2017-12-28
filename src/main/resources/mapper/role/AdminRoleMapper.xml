@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ringbackstage.web.dao.role.AdminRoleMapper">
+	
+	<!-- 启用/停用 -->
+	<update id="enabled" parameterType="ringbackstage.web.model.role.AdminRole">
+		UPDATE admin_role SET
+		enabled = #{enabled},
+		update_date = #{updateDate},
+		update_by = #{updateBy}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 增加 -->
+	<insert id="add" parameterType="ringbackstage.web.model.role.AdminRole">
+		INSERT INTO admin_role (id,name,sort,create_date,create_by,update_date,update_by,remarks,del_flag,enabled)
+		VALUES(#{id},#{name},#{sort},#{createDate},#{createBy},#{updateDate},#{updateBy},#{remarks},#{delFlag},#{enabled})
+	</insert>
+
+	<!-- 删除 -->
+	<update id="delete" parameterType="ringbackstage.web.model.role.AdminRole">
+		UPDATE admin_role SET
+		del_flag = '1',
+		update_date = #{updateDate},
+		update_by = #{updateBy}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="ringbackstage.web.model.role.AdminRole">
+		UPDATE admin_role SET
+		name = #{name},
+		sort = #{sort},
+		update_date = #{updateDate},
+		update_by = #{updateBy},
+		remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 未删除的列表 -->
+	<select id="findList" resultType="ringbackstage.web.model.role.AdminRole" resultMap="adminRoleResultMap">
+		SELECT t.*,t.id as oper FROM admin_role t
+		WHERE t.del_flag &lt;&gt; 1
+		<if test=" name != null and name != '' ">
+			AND t.name like '%${name}%'
+		</if>
+		<if test=" enabled != null and enabled != '' ">
+			AND t.enabled = #{enabled}
+		</if>
+		ORDER BY t.create_date DESC
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="findById" resultType="ringbackstage.web.model.role.AdminRole" resultMap="adminRoleResultMap">
+		SELECT t.*,t.id as oper FROM admin_role t
+		WHERE t.id = #{id}
+	</select>
+	
+	<!-- 映射 -->
+	<resultMap type="ringbackstage.web.model.role.AdminRole" id="adminRoleResultMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="sort" column="sort" />
+		<result property="createDate" column="create_date" />
+		<result property="createBy" column="create_by" />
+		<result property="updateDate" column="update_date" />
+		<result property="updateBy" column="update_by" />
+		<result property="remarks" column="remarks" />
+		<result property="delFlag" column="del_flag" />
+		<result property="enabled" column="enabled" />
+	</resultMap>
+</mapper>

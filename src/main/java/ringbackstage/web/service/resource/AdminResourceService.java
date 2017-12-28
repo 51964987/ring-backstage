@@ -13,4 +13,5 @@ public interface AdminResourceService {
 	AdminResource findById(String id)throws ResultException;
 	List<AdminResource> findList(AdminResource adminResource)throws ResultException;
 	List<AdminResource> trees(AdminResource adminResource)throws ResultException;
+	List<AdminResource> findTree(AdminResource adminResource)throws ResultException;
 }

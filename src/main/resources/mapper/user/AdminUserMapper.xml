@@ -2,10 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ringbackstage.web.dao.user.AdminUserMapper">
 	
+	<!-- 启用/停用 -->
+	<update id="enabled" parameterType="ringbackstage.web.model.user.AdminUser">
+		UPDATE admin_user SET
+		enabled = #{enabled},
+		update_date = #{updateDate},
+		update_by = #{updateBy}
+		WHERE id = #{id}
+	</update>
+	
 	<!-- 增加 -->
 	<insert id="add" parameterType="ringbackstage.web.model.user.AdminUser">
-		INSERT INTO admin_user (id,name,office_id,login_name,password,salt,create_date,create_by,update_date,update_by,remarks,del_flag)
-		VALUES(#{id},#{name},#{officeId},#{loginName},#{password},#{salt},#{createDate},#{createBy},#{updateDate},#{updateBy},#{remarks},#{delFlag})
+		INSERT INTO admin_user (id,name,office_id,login_name,password,salt,create_date,create_by,update_date,update_by,remarks,del_flag,enabled)
+		VALUES(#{id},#{name},#{officeId},#{loginName},#{password},#{salt},#{createDate},#{createBy},#{updateDate},#{updateBy},#{remarks},#{delFlag},#{enabled})
 	</insert>
 
 	<!-- 删除 -->
@@ -63,5 +72,6 @@
 		<result property="updateBy" column="update_by" />
 		<result property="remarks" column="remarks" />
 		<result property="delFlag" column="del_flag" />
+		<result property="enabled" column="enabled" />
 	</resultMap>
 </mapper>

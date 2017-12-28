@@ -88,4 +88,14 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			throw new ResultException(ResultCode.SERVER_ERROR);
 		}
 	}
+	
+	@Override
+	public List<AdminResource> findTree(AdminResource adminResource)  throws ResultException {
+		try {
+			return adminResourceMapper.findTree(adminResource);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			throw new ResultException(ResultCode.SERVER_ERROR);
+		}
+	}
 }

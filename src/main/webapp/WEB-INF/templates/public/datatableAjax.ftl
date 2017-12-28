@@ -4,6 +4,7 @@ controller=""
 add="true"
 delete="true"
 update="true"
+enabled="false"
 aoColumns=[]
 aoDataPush=[]
 refreshTreeId=""
@@ -28,6 +29,34 @@ function oper_delete(obj,id){
 			"success":function(rd){
 				if(rd.code&&rd.code==200){
 					layer.msg("已删除!",{icon:1,time:1000},function(){						
+						fnSearch();
+						<#if refreshTreeId != "">
+						if(document.fnRefreshTree_${refreshTreeId} != null){
+							fnRefreshTree_${refreshTreeId}();
+						}
+						</#if>
+					});
+				}else{
+					layer.msg("失败："+rd.message+"!",{icon:2,time:5000});
+				}
+			}
+		});
+	});
+}
+</#if>
+
+<#if enabled="true">
+/*启用/停用*/
+function oper_enabled(obj,url){
+	var title = $(obj).attr("title");
+	layer.confirm("确认要"+title+"吗？",function(index){
+		$.ajax({
+			"dataType":"json",
+			"type":"POST",
+			"url":url,
+			"success":function(rd){
+				if(rd.code&&rd.code==200){
+					layer.msg("已"+title+"!",{icon:1,time:1000},function(){						
 						fnSearch();
 						<#if refreshTreeId != "">
 						if(document.fnRefreshTree_${refreshTreeId} != null){

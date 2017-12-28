@@ -6,7 +6,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import ringbackstage.web.model.jsonserializer.OfficeOperSerializer;
+import ringbackstage.web.model.jsonserializer.CommOperSerializer;
 
 /**
  * 机构 
@@ -33,7 +33,7 @@ public class AdminOffice implements Serializable {
 	private String remarks;
 	private String delFlag;
 	
-	@JsonSerialize(using=OfficeOperSerializer.class)
+	@JsonSerialize(using=CommOperSerializer.class)
 	private String oper;
 	private String parentName;
 	

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ringbackstage.web.dao.role.AdminRoleResourceMapper">
+	
+	<!-- 增加 -->
+	<insert id="add" parameterType="java.util.List">
+		INSERT INTO admin_role_resource (role_id,resource_id)
+		VALUES
+		<foreach collection="list" item="data" separator="," index="index">		
+		(#{data.roleId},#{data.resourceId})
+		</foreach>
+	</insert>
+
+	<!-- 删除 -->
+	<update id="deleteByRoleId">
+		DELETE FROM admin_role_resource WHERE role_id = #{roleId}
+	</update>
+	
+	<!-- 未删除的列表 -->
+	<select id="findList" resultType="ringbackstage.web.model.role.AdminRoleResource" resultMap="adminRoleResourceResultMap">
+		SELECT t.* FROM admin_role_resource t
+		WHERE 1 = 1
+		<if test=" roleId != null and roleId != '' ">
+			AND t.role_id = #{roleId}
+		</if>
+	</select>
+	
+	<!-- 映射 -->
+	<resultMap type="ringbackstage.web.model.role.AdminRoleResource" id="adminRoleResourceResultMap">
+		<result property="roleId" column="role_id" />
+		<result property="resourceId" column="resource_id" />
+	</resultMap>
+</mapper>

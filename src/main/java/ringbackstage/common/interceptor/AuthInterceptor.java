@@ -43,8 +43,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		
-		System.out.println("url:"+request.getRequestURI());
-		
 		RequestLocal.request.set(request);
 		RequestLocal.start.set(new Date());
 		

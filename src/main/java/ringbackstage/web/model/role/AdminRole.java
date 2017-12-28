@@ -1,31 +1,25 @@
-package ringbackstage.web.model.user;
+package ringbackstage.web.model.role;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ringbackstage.web.model.jsonserializer.CommOperSerializer;
-
 /**
- * 用户
+ * 角色
  * @author ring
- * @date 2017年12月22日 16:38:20
+ * @date 2017年12月25日 16:17:13
  * @version V1.0
  */
-public class AdminUser implements Serializable {
+public class AdminRole implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
-	private String officeId;
-	private String loginName;
-	@JsonIgnore
-	private String password;
-	private String salt;
-	private String userType;
+	private BigDecimal sort;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createDate;
 	private String createBy;
@@ -37,7 +31,6 @@ public class AdminUser implements Serializable {
 	private String enabled;
 	@JsonSerialize(using=CommOperSerializer.class)
 	private String oper;
-	private String officeName;
 	
 	public String getId() {
 		return id;
@@ -51,35 +44,11 @@ public class AdminUser implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getOfficeId() {
-		return officeId;
+	public BigDecimal getSort() {
+		return sort;
 	}
-	public void setOfficeId(String officeId) {
-		this.officeId = officeId;
-	}
-	public String getLoginName() {
-		return loginName;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getSalt() {
-		return salt;
-	}
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setSort(BigDecimal sort) {
+		this.sort = sort;
 	}
 	public Date getCreateDate() {
 		return createDate;
@@ -117,22 +86,16 @@ public class AdminUser implements Serializable {
 	public void setDelFlag(String delFlag) {
 		this.delFlag = delFlag;
 	}
-	public String getOper() {
-		return oper;
-	}
-	public void setOper(String oper) {
-		this.oper = oper;
-	}
-	public String getOfficeName() {
-		return officeName;
-	}
-	public void setOfficeName(String officeName) {
-		this.officeName = officeName;
-	}
 	public String getEnabled() {
 		return enabled;
 	}
 	public void setEnabled(String enabled) {
 		this.enabled = enabled;
+	}
+	public String getOper() {
+		return oper;
+	}
+	public void setOper(String oper) {
+		this.oper = oper;
 	}
 }

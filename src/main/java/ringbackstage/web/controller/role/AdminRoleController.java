@@ -1,4 +1,4 @@
-package ringbackstage.web.controller.user;
+package ringbackstage.web.controller.role;
 
 import java.util.List;
 import java.util.Map;
@@ -19,16 +19,16 @@ import ringbackstage.common.exception.ResultException;
 import ringbackstage.common.interceptor.RequestLocal;
 import ringbackstage.common.utils.page.DataTableResultHelper;
 import ringbackstage.common.utils.result.ResultGenerator;
-import ringbackstage.web.model.user.AdminUser;
-import ringbackstage.web.service.user.AdminUserService;
+import ringbackstage.web.model.role.AdminRole;
+import ringbackstage.web.service.role.AdminRoleService;
 
-@RequestMapping({"/user"})
+@RequestMapping({"/role"})
 @Controller
-public class AdminUserController {
+public class AdminRoleController {
 	
 	@Autowired
-	AdminUserService adminUserService;
-
+	AdminRoleService adminRoleService;
+	
 	//--启用--//
 	@ResponseBody
 	@RequestMapping(value="usable/{id}",method=RequestMethod.POST)
@@ -36,10 +36,10 @@ public class AdminUserController {
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			AdminUser adminUser = adminUserService.findById(id);
-			if(adminUser != null){
-				adminUser.setEnabled("1");
-				data = adminUserService.enabled(adminUser,RequestLocal.getUser().get());
+			AdminRole adminRole = adminRoleService.findById(id);
+			if(adminRole != null){
+				adminRole.setEnabled("1");
+				data = adminRoleService.enabled(adminRole,RequestLocal.getUser().get());
 			}else{
 				resultCode = ResultCode.UNEXISTS_INFO_ERROR;
 			}
@@ -57,10 +57,10 @@ public class AdminUserController {
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			AdminUser adminUser = adminUserService.findById(id);
-			if(adminUser != null){	
-				adminUser.setEnabled("0");
-				data = adminUserService.enabled(adminUser,RequestLocal.getUser().get());
+			AdminRole adminRole = adminRoleService.findById(id);
+			if(adminRole != null){	
+				adminRole.setEnabled("0");
+				data = adminRoleService.enabled(adminRole,RequestLocal.getUser().get());
 			}else{
 				resultCode = ResultCode.UNEXISTS_INFO_ERROR;
 			}
@@ -74,18 +74,19 @@ public class AdminUserController {
 	//--增加--//
 	@RequestMapping(value="add",method=RequestMethod.GET)
 	public String add(Map<String , Object> model){
-		model.put("user", null);
+		model.put("role", null);
 		model.put("url", "add");
-		return "user/useroper";
+		return "role/roleoper";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="add",method=RequestMethod.POST)
-	public Object addOper(AdminUser adminUser){
+	public Object addOper(AdminRole adminRole){
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			data = adminUserService.add(adminUser,RequestLocal.getUser().get());
+			
+			data = adminRoleService.add(adminRole,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
 		}
@@ -93,7 +94,6 @@ public class AdminUserController {
 	}
 
 	//--/增加--//
-		
 	//--删除--//
 	@ResponseBody
 	@RequestMapping(value="delete/{id}",method=RequestMethod.POST)
@@ -101,9 +101,9 @@ public class AdminUserController {
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			AdminUser adminUser = adminUserService.findById(id);
-			if(adminUser != null){				
-				data = adminUserService.delete(adminUser,RequestLocal.getUser().get());
+			AdminRole adminRole = adminRoleService.findById(id);
+			if(adminRole != null){				
+				data = adminRoleService.delete(adminRole,RequestLocal.getUser().get());
 			}else{
 				resultCode = ResultCode.UNEXISTS_INFO_ERROR;
 			}
@@ -117,17 +117,18 @@ public class AdminUserController {
 	//--修改--//
 	@RequestMapping(value="update/{id}",method=RequestMethod.GET)
 	public String update(@PathVariable String id,Map<String , Object> model) throws ResultException{
-		model.put("user", adminUserService.findById(id));
+		model.put("role", adminRoleService.findById(id));
 		model.put("url", "update");
-		return "user/useroper";
+		return "role/roleoper";
 	}
 	@ResponseBody
 	@RequestMapping(value="update",method=RequestMethod.POST)
-	public Object update(AdminUser adminUser){
+	public Object update(AdminRole adminRole){
 		ResultCode resultCode = ResultCode.SUCCESS;
 		int data = 0;
 		try {
-			data = adminUserService.update(adminUser,RequestLocal.getUser().get());
+			
+			data = adminRoleService.update(adminRole,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
 		}
@@ -138,20 +139,20 @@ public class AdminUserController {
 	//--未删除的列表--//
 	@RequestMapping({"/index"})
 	public String index(){
-		return "user/userindex";
+		return "role/roleindex";
 	}
 	
 	@ResponseBody
-	@RequestMapping({"/finduser"})
+	@RequestMapping({"/findrole"})
 	public Object findList(
 			@RequestParam(required=false)Integer sEcho,
 			@RequestParam(required=false)Integer iDisplayStart,
 			@RequestParam(required=false)Integer iDisplayLength,
-			AdminUser adminUser
+			AdminRole adminRole
 			) throws ResultException{
 		PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
-		List<AdminUser> list = adminUserService.findList(adminUser);
-		PageInfo<AdminUser> pageInfo = new PageInfo<>(list);
+		List<AdminRole> list = adminRoleService.findList(adminRole);
+		PageInfo<AdminRole> pageInfo = new PageInfo<>(list);
 		return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
 	}
 	//--/未删除的列表--//

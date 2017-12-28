@@ -8,6 +8,7 @@ import ringbackstage.web.model.user.AdminUser;
 
 @Mapper
 public interface AdminUserMapper {
+	int enabled(AdminUser adminUserMapper)throws Exception;
 	int add(AdminUser adminUserMapper)throws Exception;
 	int delete(AdminUser adminUserMapper)throws Exception;
 	int update(AdminUser adminUserMapper)throws Exception;

@@ -84,8 +84,9 @@ function beforeExpand_${id}(treeId,treeNode){
 		return false;
 	}	
 }
-/*radio单选*/
 function beforeCheck_${id}(treeId,treeNode){
+	<#if checkRadio == "true">
+	/*radio单选*/
 	var treeobj = $.fn.zTree.getZTreeObj("${id}");
 	var checkNodes = treeobj.getCheckedNodes(true);
 	if(checkNodes.length>0){
@@ -94,6 +95,7 @@ function beforeCheck_${id}(treeId,treeNode){
 		}
 	}
 	beforeCheckCallback_${id}(treeId,treeNode);
+	</#if>
 }
 /*radio单选回调*/
 function beforeCheckCallback_${id}(treeId,treeNode){

@@ -14,6 +14,7 @@ import ringbackstage.common.enums.ResultCode;
 import ringbackstage.common.exception.ResultException;
 import ringbackstage.web.dao.user.AdminUserMapper;
 import ringbackstage.web.model.user.AdminUser;
+import ringutils.encrypt.MD5Util;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService{
@@ -22,9 +23,25 @@ public class AdminUserServiceImpl implements AdminUserService{
 	private AdminUserMapper adminUserMapper;
 
 	@Override
+	public int enabled(AdminUser adminUser,AdminUser loginUser) throws ResultException {
+		try {
+			adminUser.setUpdateBy(loginUser.getLoginName());
+			adminUser.setUpdateDate(new Date());
+			return adminUserMapper.enabled(adminUser);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			throw new ResultException(ResultCode.SERVER_ERROR);
+		}
+	}
+	
+	@Override
 	public int add(AdminUser adminUser,AdminUser loginUser) throws ResultException {
 		try {
+			adminUser.setSalt(new Date().getTime()+"");
 			adminUser.setDelFlag("0");
+			adminUser.setEnabled("1");
+			//默认密码
+			adminUser.setPassword(MD5Util.encrypt(adminUser.getSalt()+"123456"));
 			adminUser.setCreateBy(loginUser.getLoginName());
 			adminUser.setCreateDate(new Date());
 			adminUser.setId(UUID.randomUUID().toString());

@@ -20,7 +20,7 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" <#if office?exists>value="${office.name}"</#if> placeholder="" name="name">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>排序：</label>
+			<label class="form-label col-xs-2 col-sm-2">排序：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="number" min="1" class="input-text" style="width:100%" <#if office?exists>value="${(office.sort)?c}"</#if> placeholder="" name="sort">
 			</div>
@@ -72,9 +72,6 @@ $(function(){
 	$("#form-office").validate({
 		rules:{
 			name:{
-				required:true
-			},
-			sort:{
 				required:true
 			}
 		},

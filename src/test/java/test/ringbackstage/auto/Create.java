@@ -52,7 +52,7 @@ public class Create {
 	@Test
 	public void mapper() throws Exception{
 		
-		controller = false;
+		controller = true;
 		service = true;
 		mapperDao = true;
 		javaBean = true;

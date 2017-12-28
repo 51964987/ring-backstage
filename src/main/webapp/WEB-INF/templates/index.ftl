@@ -57,6 +57,7 @@
 					<li><a data-href="${springMacroRequestContext.contextPath}/office/index" data-title="机构管理" href="javascript:void(0)">机构管理</a></li>
 					<li><a data-href="${springMacroRequestContext.contextPath}/user/index" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
 					<li><a data-href="${springMacroRequestContext.contextPath}/resource/index" data-title="资源管理" href="javascript:void(0)">资源管理</a></li>
+					<li><a data-href="${springMacroRequestContext.contextPath}/role/index" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
 			</ul>
 		</dd>
 	</dl>

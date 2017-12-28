@@ -42,7 +42,20 @@
 		<if test=" parentId != null and parentId != '' ">
 			AND (FIND_IN_SET(#{parentId},t.parent_ids) > 0 OR t.id = #{parentId} )
 		</if>
-		ORDER BY t.create_date DESC
+		ORDER BY t.sort DESC
+	</select>
+	
+	<!-- 用于角色页面分配资源 -->
+	<select id="findTree" resultType="ringbackstage.web.model.resource.AdminResource" resultMap="adminResourceResultMap">
+		SELECT t.* FROM admin_resource t
+		WHERE t.del_flag &lt;&gt; 1
+		<if test=" parentId != null and parentId != '' ">
+			AND t.parent_id = #{parentId}
+		</if>
+		<if test=" parentId == null or parentId == '' ">
+			AND (t.parent_id IS NULL OR t.parent_id = '')
+		</if>
+		ORDER BY t.sort DESC
 	</select>
 	
 	<!-- 根据ID查询 -->
