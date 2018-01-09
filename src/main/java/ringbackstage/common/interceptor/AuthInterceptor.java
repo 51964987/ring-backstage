@@ -56,8 +56,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 			request.getRequestDispatcher("/msgerror").forward(request, response);
 			return false;*/
 			//debug
-			user = new AdminUser();
-			user.setLoginName("admin");
+			//user = new AdminUser();
+			//user.setLoginName("admin");
+			//request.getRequestDispatcher("/login").forward(request, response);
+			response.sendRedirect("/login");
+			return false;
 		}
 		RequestLocal.getUser().set(user);
 		return true;

@@ -10,13 +10,17 @@ public class PlatformConstant {
 	/**
 	 * 登录用户KEY
 	 */
-	public static final String SESSION_USER = "";
+	public static final String SESSION_USER = "SESSION_USER";
 	/**
 	 * 包括用户信息/角色信息和资源信息
 	 */
-	public static final String SESSION_RESULTDATA = "";
+	public static final String SESSION_RESULTDATA = "SESSION_RESULTDATA";
+	/**
+	 * 验证码
+	 */
+	public static final String SESSION_LOGIN_CODE = "SESSION_LOGIN_CODE";
 	/**
 	 * TOKEN信息
 	 */
-	public static final String SESSION_TOKEN = "";
+	public static final String SESSION_TOKEN = "SESSION_TOKEN";
 }

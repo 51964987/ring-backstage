@@ -23,7 +23,7 @@ CREATE TABLE `admin_user`(
 	`office_id` varchar(64) DEFAULT NULL COMMENT '所属机构',
 	`login_name` varchar(100) NOT NULL COMMENT '登录名',
 	`password` varchar(100) DEFAULT NULL COMMENT '登录密码',
-	`salt` varchar(100) DEFAULT NULL COMMENT '密码盐',
+	`salt` varchar(100) NOT NULL COMMENT '密码盐',
 	`user_type` char(1) DEFAULT NULL COMMENT '用户类型，1：管理用户2：业务用户',
 	`create_date` datetime NOT NULL COMMENT '创建时间',
 	`create_by` varchar(64) NOT NULL COMMENT '创建人',

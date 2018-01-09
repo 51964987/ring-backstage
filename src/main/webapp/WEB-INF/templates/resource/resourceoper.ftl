@@ -39,6 +39,16 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-2 col-sm-2">连接地址：</label>
+			<div class="formControls col-xs-4 col-sm-4">
+				<input type="text" class="input-text" <#if resource?exists && (resource.url)?exists>value="${resource.url}"</#if> placeholder="" name="url">
+			</div>
+			<label class="form-label col-xs-2 col-sm-2">图标：</label>
+			<div class="formControls col-xs-4 col-sm-4">
+				<input type="number" min="1" class="input-text" style="width:100%" <#if resource?exists && (resource.icon)?exists>value="${resource.icon}"</#if> placeholder="" name="icon">
+			</div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">备注：</label>
 			<div class="formControls col-xs-10 col-sm-10">
 				<textarea name="remarks" cols="" rows="" class="textarea"  placeholder="说点什么..." onKeyUp="$.ringtextarealength(this,255)"></textarea>

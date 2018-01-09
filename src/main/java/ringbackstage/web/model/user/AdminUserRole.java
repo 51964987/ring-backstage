@@ -18,6 +18,8 @@ public class AdminUserRole implements Serializable {
 	private String roleId;
 	@JsonSerialize(using=CommOperSerializer.class)
 	private String oper;
+
+	private String roleName;
 	
 	public String getUserId() {
 		return userId;
@@ -37,4 +39,11 @@ public class AdminUserRole implements Serializable {
 	public void setOper(String oper) {
 		this.oper = oper;
 	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	
 }

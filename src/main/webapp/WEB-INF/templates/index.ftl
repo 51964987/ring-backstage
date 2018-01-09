@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html>
 <#include "/public/head.ftl" />
@@ -23,13 +22,13 @@
 		</nav>
 		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 			<ul class="cl">
-				<li>超级管理员</li>
+				<li>${SESSION_USER.name}</li>
 				<li class="dropDown dropDown_hover">
-					<a href="${springMacroRequestContext.contextPath}/#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+					<a href="${springMacroRequestContext.contextPath}/#" class="dropDown_A">${SESSION_USER.loginName} <i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
 						<li><a href="${springMacroRequestContext.contextPath}/#">切换账户</a></li>
-						<li><a href="${springMacroRequestContext.contextPath}/#">退出</a></li>
+						<li><a href="${springMacroRequestContext.contextPath}/logout#">退出</a></li>
 				</ul>
 			</li>
 				<li id="Hui-msg"> <a href="${springMacroRequestContext.contextPath}/#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -50,21 +49,26 @@
 </header>
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
+	<#if SESSION_RESULTDATA?exists&& SESSION_RESULTDATA.backResource?exists>
+	<#list SESSION_RESULTDATA.backResource as resource>
 		<dl id="menu-system">
-			<dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">${resource.icon?default('')}</i> ${resource.name?default('')}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<#if resource.child?exists>
 			<dd>
 				<ul>
-					<li><a data-href="${springMacroRequestContext.contextPath}/office/index" data-title="机构管理" href="javascript:void(0)">机构管理</a></li>
-					<li><a data-href="${springMacroRequestContext.contextPath}/user/index" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
-					<li><a data-href="${springMacroRequestContext.contextPath}/resource/index" data-title="资源管理" href="javascript:void(0)">资源管理</a></li>
-					<li><a data-href="${springMacroRequestContext.contextPath}/role/index" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+				<#list resource.child as rschild>
+					<li><a data-href="${rschild.url?default('')}" data-title="${rschild.name}" href="javascript:void(0)">${rschild.name}</a></li>
+				</#list>
 			</ul>
-		</dd>
-	</dl>
+			</dd>
+			</#if>
+		</dl>
+	</#list>
+	</#if>	
 </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
-<section class="Hui-article-box">
+<section class="Hui-article-box" id="Hui-article-box">
 	<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">

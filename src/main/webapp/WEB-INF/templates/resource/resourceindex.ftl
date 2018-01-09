@@ -13,7 +13,7 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资源管理 <span class="c-gray en">&gt;</span> 资源列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<#include "/public/datatable.ftl" />
-		<@datatable titles=["资源名称","上级编号","排序","备注","是否后台应用","操作"]>
+		<@datatable titles=["资源名称","上级编号","地址","图标","排序","备注","是否后台应用","操作"]>
 		<div class="text-c"> 资源名称：
 			<input type="hidden" id="parentId" name="parentId" style="width:250px" class="input-text">
 			<input type="hidden" id="parentName" name="parentName" style="width:250px" class="input-text">
@@ -40,7 +40,7 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 controller="resource"
 sAjaxSource="${springMacroRequestContext.contextPath}/resource/findresource"
 aoDataPush=["parentId","name"]
-aoColumns=["{'mDataProp':'name'}","{'mDataProp':'parentName'}","{'mDataProp':'sort'}","{'mDataProp':'remarks'}","{'mDataProp':'backFlag'}","{'mDataProp':'oper'}"]
+aoColumns=["{'mDataProp':'name'}","{'mDataProp':'parentName'}","{'mDataProp':'url'}","{'mDataProp':'icon'}","{'mDataProp':'sort'}","{'mDataProp':'remarks'}","{'mDataProp':'backFlag'}","{'mDataProp':'oper'}"]
 refreshTreeId="treeDemo"
 ></@datatableAjax>
 <script>

@@ -59,14 +59,14 @@ function Hui_admin_tab(obj){
 		iframe_box = topWindow.find("#iframe_box");
 	//console.log(topWindow);
 	if(!href||href==""){
-		alert("data-href不存在，v2.5版本之前用_href属性，升级后请改为data-href属性");
+//		alert("data-href不存在，v2.5版本之前用_href属性，升级后请改为data-href属性");
 		return false;
 	}if(!title){
-		alert("v2.5版本之后使用data-title属性");
+//		alert("v2.5版本之后使用data-title属性");
 		return false;
 	}
 	if(title==""){
-		alert("data-title属性不能为空");
+//		alert("data-title属性不能为空");
 		return false;
 	}
 	show_navLi.each(function() {

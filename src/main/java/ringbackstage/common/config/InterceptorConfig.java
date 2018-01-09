@@ -12,7 +12,9 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(new AuthInterceptor())
+		.addPathPatterns("/**")
+		.excludePathPatterns("/login","/code/captcha-image");
 		super.addInterceptors(registry);
 	}
 

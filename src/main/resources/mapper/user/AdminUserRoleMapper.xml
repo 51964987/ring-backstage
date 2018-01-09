@@ -18,7 +18,8 @@
 		
 	<!-- 未删除的列表 -->
 	<select id="findList" resultType="ringbackstage.web.model.user.AdminUserRole" resultMap="adminUserRoleResultMap">
-		SELECT t.* FROM admin_user_role t
+		SELECT t.*,r.name as role_name FROM admin_user_role t
+		LEFT JOIN admin_role r ON t.role_id = r.id
 		WHERE 1 = 1
 		<if test=" userId != null and userId != '' ">
 			AND t.user_id = #{userId}
@@ -29,5 +30,6 @@
 	<resultMap type="ringbackstage.web.model.user.AdminUserRole" id="adminUserRoleResultMap">
 		<result property="userId" column="user_id" />
 		<result property="roleId" column="role_id" />
+		<result property="roleName" column="role_name" />
 	</resultMap>
 </mapper>

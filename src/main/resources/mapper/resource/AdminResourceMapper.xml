@@ -4,8 +4,8 @@
 	
 	<!-- 增加 -->
 	<insert id="add" parameterType="ringbackstage.web.model.resource.AdminResource">
-		INSERT INTO admin_resource (id,name,parent_id,parent_ids,sort,create_date,create_by,update_date,update_by,remarks,del_flag,back_flag)
-		VALUES(#{id},#{name},#{parentId},#{parentIds},#{sort},#{createDate},#{createBy},#{updateDate},#{updateBy},#{remarks},#{delFlag},#{backFlag})
+		INSERT INTO admin_resource (id,name,parent_id,parent_ids,sort,create_date,create_by,update_date,update_by,remarks,del_flag,back_flag,url,icon)
+		VALUES(#{id},#{name},#{parentId},#{parentIds},#{sort},#{createDate},#{createBy},#{updateDate},#{updateBy},#{remarks},#{delFlag},#{backFlag},#{url},#{icon})
 	</insert>
 
 	<!-- 删除 -->
@@ -22,6 +22,8 @@
 		UPDATE admin_resource SET
 		name = #{name},
 		sort = #{sort},
+		url = #{url},
+		icon = #{icon},
 		back_flag = #{backFlag},
 		parent_id = #{parentId},
 		parent_ids = #{parentIds},
@@ -78,6 +80,30 @@
 		ORDER BY sort,create_date DESC
 	</select>
 	
+	<!-- 根据角色ID查询业务资源 -->
+	<select id="findBusResourceByRoleIds" resultMap="adminResourceResultMap">
+		SELECT DISTINCT r.* FROM admin_role_resource rr
+		LEFT JOIN admin_resource r ON rr.resource_id = r.id
+		WHERE rr.role_id in
+		<foreach collection="roleIds" index="index" item="roid" open="(" separator="," close=")">
+			#{roid}
+		</foreach>
+		AND r.back_flag &lt;&gt; 1
+		ORDER BY r.back_flag,r.sort
+	</select>	
+	
+	<!-- 根据角色ID查询后台资源 -->
+	<select id="findBackResourceByRoleIds" resultMap="adminResourceResultMap">
+		SELECT DISTINCT r.* FROM admin_role_resource rr
+		LEFT JOIN admin_resource r ON rr.resource_id = r.id
+		WHERE rr.role_id in
+		<foreach collection="roleIds" index="index" item="roid" open="(" separator="," close=")">
+			#{roid}
+		</foreach>
+		AND r.back_flag = 1
+		ORDER BY r.back_flag,r.sort
+	</select>
+	
 	<!-- 映射 -->
 	<resultMap type="ringbackstage.web.model.resource.AdminResource" id="adminResourceResultMap">
 		<result property="id" column="id" />
@@ -93,5 +119,7 @@
 		<result property="remarks" column="remarks" />
 		<result property="delFlag" column="del_flag" />
 		<result property="backFlag" column="back_flag" />
+		<result property="url" column="url" />
+		<result property="icon" column="icon" />
 	</resultMap>
 </mapper>

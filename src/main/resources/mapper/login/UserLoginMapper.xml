@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ringbackstage.web.dao.login.UserLoginMapper">
+
+	<!-- 根据ID查询 -->
+	<select id="findByLoginName" resultType="ringbackstage.web.model.user.AdminUser" resultMap="adminUserResultMap">
+		SELECT t.*,t.id as oper,o.name as office_name FROM admin_user t
+		LEFT JOIN admin_office o ON t.office_id = o.id
+		WHERE t.login_name = #{loginName}
+	</select>
+	
+	<!-- 映射 -->
+	<resultMap type="ringbackstage.web.model.user.AdminUser" id="adminUserResultMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="officeId" column="office_id" />
+		<result property="officeName" column="office_name" />
+		<result property="loginName" column="login_name" />
+		<result property="password" column="password" />
+		<result property="salt" column="salt" />
+		<result property="createDate" column="create_date" />
+		<result property="createBy" column="create_by" />
+		<result property="updateDate" column="update_date" />
+		<result property="updateBy" column="update_by" />
+		<result property="remarks" column="remarks" />
+		<result property="delFlag" column="del_flag" />
+		<result property="enabled" column="enabled" />
+	</resultMap>
+</mapper>

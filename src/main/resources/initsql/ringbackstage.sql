@@ -52,6 +52,8 @@ CREATE TABLE `admin_resource`(
 	`remarks` varchar(255) DEFAULT NULL COMMENT '备注',
 	`del_flag` char(1) NOT NULL COMMENT '删除标记',
 	`back_flag` char(1) NOT NULL COMMENT '是否后台应用,1:后台管理，0：业务应用',
+	`url` varchar(255) NOT DEFAULT COMMENT '连接地址',
+	`icon` varchar(100) DEFAULT NULL COMMENT '图标',
 	PRIMARY KEY (`id`),
 	KEY `admin_resource_parent_id` (`parent_id`),
 	KEY `admin_resource_del_flag` (`del_flag`),

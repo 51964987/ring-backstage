@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.String;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ringbackstage.web.model.jsonserializer.CommOperSerializer;
@@ -30,9 +32,14 @@ public class AdminResource implements Serializable {
 	private String remarks;
 	private String delFlag;
 	private String backFlag;
+	private String url;
+	private String icon;
+	
 	@JsonSerialize(using=CommOperSerializer.class)
 	private String oper;
 	private String parentName;
+	
+	private List<AdminResource> child;	//用于登录后获取用户资源
 	
 	public String getId() {
 		return id;
@@ -106,6 +113,18 @@ public class AdminResource implements Serializable {
 	public void setBackFlag(String backFlag) {
 		this.backFlag = backFlag;
 	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 	public String getOper() {
 		return oper;
 	}
@@ -117,5 +136,11 @@ public class AdminResource implements Serializable {
 	}
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
+	}
+	public List<AdminResource> getChild() {
+		return child;
+	}
+	public void setChild(List<AdminResource> child) {
+		this.child = child;
 	}
 }
