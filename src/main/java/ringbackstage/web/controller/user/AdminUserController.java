@@ -1,5 +1,6 @@
 package ringbackstage.web.controller.user;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class AdminUserController {
 	@RequestMapping(value="usable/{id}",method=RequestMethod.POST)
 	public Object usable(@PathVariable String id){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			AdminUser adminUser = adminUserService.findById(id);
@@ -45,8 +47,9 @@ public class AdminUserController {
 			}
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/启用--//
 	
@@ -55,6 +58,7 @@ public class AdminUserController {
 	@RequestMapping(value="unusable/{id}",method=RequestMethod.POST)
 	public Object unusable(@PathVariable String id){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			AdminUser adminUser = adminUserService.findById(id);
@@ -66,8 +70,9 @@ public class AdminUserController {
 			}
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/停用--//
 	
@@ -83,13 +88,15 @@ public class AdminUserController {
 	@RequestMapping(value="add",method=RequestMethod.POST)
 	public Object addOper(AdminUser adminUser){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			data = adminUserService.add(adminUser,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode, errorMsg,data, RequestLocal.getStart().get());
 	}
 
 	//--/增加--//
@@ -99,6 +106,7 @@ public class AdminUserController {
 	@RequestMapping(value="delete/{id}",method=RequestMethod.POST)
 	public Object delete(@PathVariable String id){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			AdminUser adminUser = adminUserService.findById(id);
@@ -109,8 +117,9 @@ public class AdminUserController {
 			}
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/删除--//
 	
@@ -125,13 +134,15 @@ public class AdminUserController {
 	@RequestMapping(value="update",method=RequestMethod.POST)
 	public Object update(AdminUser adminUser){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			data = adminUserService.update(adminUser,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/修改--//
 	
@@ -149,10 +160,19 @@ public class AdminUserController {
 			@RequestParam(required=false)Integer iDisplayLength,
 			AdminUser adminUser
 			) throws ResultException{
-		PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
-		List<AdminUser> list = adminUserService.findList(adminUser);
-		PageInfo<AdminUser> pageInfo = new PageInfo<>(list);
-		return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
+		Map<String, Object> map = new HashMap<>();
+		PageInfo<AdminUser> pageInfo=null;
+		try {
+			PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
+			List<AdminUser> list = adminUserService.findList(adminUser);
+			pageInfo = new PageInfo<>(list);
+			return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
+		} catch (ResultException e) {
+			map.put("code", e.getResultCode().getCode());
+			map.put("message", e.getResultCode().getMsg());
+			map.put("errorMessage",e.getErrorMessage());
+		}
+		return map;
 	}
 	//--/未删除的列表--//
 }

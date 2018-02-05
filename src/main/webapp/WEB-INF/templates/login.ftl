@@ -56,7 +56,7 @@ if(window != top){
           <label for="online">
             <input type="checkbox" name="online" id="online" value="">
             使我保持登录状态</label>
-            <label style="color:red;margin-left:10px;"><#if error?exists&&(error?exists)?exists>${error.msg}</#if></label>
+            <label style="color:red;margin-left:10px;"><#if error?exists&&(error?exists)?exists>${error.resultCode.msg}</#if></label>
         </div>
       </div>
       <div class="row cl">

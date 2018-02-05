@@ -31,7 +31,7 @@ public class OfficeServiceImpl implements OfficeService{
 			return officeMapper.add(office);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -43,7 +43,7 @@ public class OfficeServiceImpl implements OfficeService{
 			return officeMapper.delete(office);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -55,7 +55,7 @@ public class OfficeServiceImpl implements OfficeService{
 			return officeMapper.update(office);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 

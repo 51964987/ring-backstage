@@ -27,6 +27,6 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	private <T> RestResult<T> handleException(Exception e,HttpServletRequest request){
 		logger.error(e.getMessage(),e);
-		return ResultGenerator.result("500", e.getMessage(), null, new Date());
+		return ResultGenerator.result("500",e.getMessage(), e.getMessage(), null, new Date());
 	}
 }

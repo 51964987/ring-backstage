@@ -29,7 +29,7 @@ public class AdminRoleServiceImpl implements AdminRoleService{
 			return adminRoleMapper.enabled(adminRole);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -44,7 +44,7 @@ public class AdminRoleServiceImpl implements AdminRoleService{
 			return adminRoleMapper.add(adminRole);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -56,7 +56,7 @@ public class AdminRoleServiceImpl implements AdminRoleService{
 			return adminRoleMapper.delete(adminRole);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -68,7 +68,7 @@ public class AdminRoleServiceImpl implements AdminRoleService{
 			return adminRoleMapper.update(adminRole);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -78,7 +78,7 @@ public class AdminRoleServiceImpl implements AdminRoleService{
 			return adminRoleMapper.findById(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class AdminRoleServiceImpl implements AdminRoleService{
 			return adminRoleMapper.findList(adminRole);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 }

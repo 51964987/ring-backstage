@@ -36,8 +36,8 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 				<span class="select-box">
 				<select class="select" size="1" name="userType">
 					<option value="" selected>请选择</option>
-					<option value="2" <#if user?exists && user.userType == "2">selected</#if>>业务用户</option>
-					<option value="1" <#if user?exists && user.userType == "1">selected</#if>>管理用户</option>
+					<option value="2" <#if user?exists && (user.userType)?exists && user.userType == "2">selected</#if>>业务用户</option>
+					<option value="1" <#if user?exists && (user.userType)?exists && user.userType == "1">selected</#if>>管理用户</option>
 				</select>
 				</span>
 			</div>

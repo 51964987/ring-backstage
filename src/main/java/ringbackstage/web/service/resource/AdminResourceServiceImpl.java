@@ -31,7 +31,7 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			return adminResourceMapper.add(adminResource);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -43,7 +43,7 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			return adminResourceMapper.delete(adminResource);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -55,7 +55,7 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			return adminResourceMapper.update(adminResource);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -65,7 +65,7 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			return adminResourceMapper.findById(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -75,7 +75,7 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			return adminResourceMapper.findList(adminResource);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -85,7 +85,7 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			return adminResourceMapper.trees(adminResource);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -95,7 +95,7 @@ public class AdminResourceServiceImpl implements AdminResourceService{
 			return adminResourceMapper.findTree(adminResource);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 }

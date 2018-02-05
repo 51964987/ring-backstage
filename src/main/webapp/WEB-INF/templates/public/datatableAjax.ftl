@@ -80,11 +80,22 @@ function oper_edit(title,url,w,h){
 }
 </#if>
 
+<#if update="true">
+/*查看*/
+function oper_detail(obj,id){
+	var shallowEncoded = $.param(curPageData[id], true);
+	var shallowDecoded = decodeURIComponent(shallowEncoded);
+	//alert(shallowEncoded);
+	//alert(shallowDecoded);
+}
+</#if>
+
 /*搜索*/
 function fnSearch(){
 	$('.table-sort').dataTable().fnDraw(true);
 }
 var otable;
+var curPageData={};
 $(document).ready(function(){
 	$.getJSON("${springMacroRequestContext.contextPath}/static/public/ajax-datatable.json",function(json){
 			otable = $('.table-sort').dataTable($.extend(json,{
@@ -95,6 +106,7 @@ $(document).ready(function(){
 				<#list aoDataPush as j>
 				aoData.push({"name":"${j}","value":$("[name='${j}']").val()});
 				</#list>
+				curPageData={};
 				$.ajax({
 					"dataType":"json",
 					"type":"POST",
@@ -107,6 +119,7 @@ $(document).ready(function(){
 	         	$(nRow).removeClass("odd");
 				$(nRow).removeClass("even");
 				$(nRow).addClass("text-c");
+				curPageData[aData.id]=aData;
 	         }  
 		}));  
 	});

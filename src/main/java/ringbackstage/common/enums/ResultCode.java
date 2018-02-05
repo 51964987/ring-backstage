@@ -6,6 +6,8 @@ public enum ResultCode {
 	SUCCESS("200",""),
 	/** 后台出错 */
 	SERVER_ERROR("500","后台出错"),
+	/** 后台出错 */
+	UNKNOW_ERROR("10000","未知错误"),
 	
 	/** 会话不存在或已超时 */
 	SESSION_ERROR("10100","会话不存在或已超时"),
@@ -45,5 +47,4 @@ public enum ResultCode {
 	public String getMsg() {
 		return msg;
 	}
-	
 }

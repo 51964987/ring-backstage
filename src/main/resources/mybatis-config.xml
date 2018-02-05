@@ -25,8 +25,9 @@
 		<setting name="localCacheScope" value="SESSION" />
 		<!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 -->
 		<setting name="jdbcTypeForNull" value="NULL" />
-		<!-- 配置mybatis的log实现，配置后，后台就会有sql语句的输出 -->
-		<setting name="logImpl" value="STDOUT_LOGGING" />
+		<!-- 配置mybatis的log实现，配置后，SLF4J,STDOUT_LOGGING,LOG4J,LOG4J2,COMMONS_LOGGING,NO_LOGGING
+		后台就会有sql语句的输出 -->
+		<setting name="logImpl" value="SLF4J" />
 	</settings>
 	<plugins>
 		<plugin interceptor="com.github.pagehelper.PageHelper">

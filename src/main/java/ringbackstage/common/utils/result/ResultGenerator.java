@@ -19,16 +19,17 @@ import ringbackstage.common.enums.ResultCode;
 public class ResultGenerator {
 	private static Logger logger = LoggerFactory.getLogger(ResultGenerator.class);
 	
-	public static <T> RestResult<T> result(ResultCode resultCode,T data,Date start){
-		return result(resultCode.getCode(), resultCode.getMsg(), data, start);
+	public static <T> RestResult<T> result(ResultCode resultCode,String errorMsg,T data,Date start){
+		return result(resultCode.getCode(), resultCode.getMsg(),errorMsg, data, start);
 	}
 	
-	public static <T> RestResult<T> result(String code,String msg,T data,Date start){
+	public static <T> RestResult<T> result(String code,String msg,String errorMsg,T data,Date start){
 		RestResult<T> restResult = RestResult.newInstance();
 		restResult.setStart(start);
 		restResult.setEnd(new Date());
 		restResult.setCode(code);
 		restResult.setMessage(msg);
+		restResult.setErrorMsg(errorMsg);
 		restResult.setData(data);
 		if(logger.isDebugEnabled()){
 			logger.debug("generate rest result :"+JSON.toJSONString(restResult));

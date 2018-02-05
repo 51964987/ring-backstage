@@ -52,6 +52,8 @@ CREATE TABLE `admin_resource`(
 	`remarks` varchar(255) DEFAULT NULL COMMENT '备注',
 	`del_flag` char(1) NOT NULL COMMENT '删除标记',
 	`back_flag` char(1) NOT NULL COMMENT '是否后台应用,1:后台管理，0：业务应用',
+	`url` varchar(255) NOT DEFAULT COMMENT '连接地址',
+	`icon` varchar(100) DEFAULT NULL COMMENT '图标',
 	PRIMARY KEY (`id`),
 	KEY `admin_resource_parent_id` (`parent_id`),
 	KEY `admin_resource_del_flag` (`del_flag`),
@@ -87,3 +89,29 @@ CREATE TABLE `admin_user_role`(
 	`role_id` varchar(64) NOT NULL COMMENT '角色ID',
 	PRIMARY KEY (`user_id`,`role_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-角色';
+
+
+DROP TABLE IF EXISTS `admin_log`;
+CREATE TABLE `admin_log`(
+	`id` varchar(64) NOT NULL COMMENT '编号',
+	`log_type` varchar(64) DEFAULT NULL COMMENT '日志类型',
+	`req_method` varchar(255) DEFAULT NULL COMMENT '请求方式',
+	`uri` varchar(255) DEFAULT NULL COMMENT '请求地址',
+	`req_params` text DEFAULT NULL COMMENT '请求参数',
+	`code` varchar(255) DEFAULT NULL COMMENT '日志状态',
+	`message` varchar(255) DEFAULT NULL COMMENT '日志信息',
+	`error_msg` text DEFAULT NULL COMMENT '异常信息',
+	`create_ip` varchar(255) DEFAULT NULL COMMENT '操作IP',
+	`create_date` datetime DEFAULT NULL COMMENT '操作时间',
+	`create_by` varchar(64) DEFAULT NULL COMMENT '操作人',
+	PRIMARY KEY (`id`),
+	KEY `admin_log_log_type` (`log_type`),
+	KEY `admin_log_req_method` (`req_method`),
+	KEY `admin_log_req_params` (`req_params`),
+	KEY `admin_log_code` (`code`),
+	KEY `admin_log_message` (`message`),
+	KEY `admin_log_error_msg` (`error_msg`),
+	KEY `admin_log_create_ip` (`create_ip`),
+	KEY `admin_log_create_date` (`create_date`),
+	KEY `admin_log_create_by` (`create_by`)	
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志表';

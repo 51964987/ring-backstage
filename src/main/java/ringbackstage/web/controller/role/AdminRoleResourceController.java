@@ -38,6 +38,7 @@ public class AdminRoleResourceController {
 	@RequestMapping(value="roleresource/accredit",method=RequestMethod.POST)
 	public Object accredit(String id,String[] resourceId) throws ResultException{
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			List<AdminRoleResource> userRoles = new ArrayList<>();
@@ -53,8 +54,9 @@ public class AdminRoleResourceController {
 			adminRoleResourceService.accredit(id, userRoles);	
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/角色资源--//
 	

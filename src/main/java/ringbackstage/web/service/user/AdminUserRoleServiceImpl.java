@@ -33,7 +33,7 @@ public class AdminUserRoleServiceImpl implements AdminUserRoleService{
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 		return 0;
 	}
@@ -44,7 +44,7 @@ public class AdminUserRoleServiceImpl implements AdminUserRoleService{
 			return adminUserRoleMapper.findList(adminUserRole);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 }

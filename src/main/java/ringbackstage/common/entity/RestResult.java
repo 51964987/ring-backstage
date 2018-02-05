@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class RestResult<T> {
 	private String code;
 	private String message;
+	private String errorMsg;
 	private T data;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date start;
@@ -38,10 +39,15 @@ public class RestResult<T> {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 	public T getData() {
 		return data;
 	}
-
 	public void setData(T data) {
 		this.data = data;
 	}

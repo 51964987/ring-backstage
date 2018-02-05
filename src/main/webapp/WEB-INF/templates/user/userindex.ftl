@@ -19,7 +19,7 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 		<div class="text-c"> 用户名称：
 			<input type="hidden" id="parentId" name="officeId" style="width:250px" class="input-text">
 			<input type="hidden" id="parentName" name="officeName" style="width:250px" class="input-text">
-			<input type="text" name="loginnName" placeholder=" 用户名称" style="width:250px" class="input-text">
+			<input type="text" name="loginName" placeholder=" 用户名称" style="width:250px" class="input-text">
 			<button class="btn btn-success" onClick="fnSearch()"><i class="Hui-iconfont">&#xe665;</i> 搜索用户</button>
 			<button class="btn btn-primary radius" onClick="oper_add('添加用户','${springMacroRequestContext.contextPath}/user/add')"><i class="Hui-iconfont">&#xe600;</i> 添加用户</button>
 		</div>
@@ -41,7 +41,7 @@ links=["${springMacroRequestContext.contextPath}/lib/zTree/v3/css/zTreeStyle/zTr
 <@datatableAjax 
 controller="user"
 sAjaxSource="${springMacroRequestContext.contextPath}/user/finduser"
-aoDataPush=["officeId","name"]
+aoDataPush=["officeId","loginName"]
 aoColumns=["{'mDataProp':'loginName'}","{'mDataProp':'officeName'}","{'mDataProp':'name'}","{'mDataProp':'remarks'}","{'mDataProp':'enabled'}","{'mDataProp':'oper'}"]
 refreshTreeId="treeDemo"
 enabled="true"

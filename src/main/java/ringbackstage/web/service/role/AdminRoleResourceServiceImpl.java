@@ -44,7 +44,7 @@ public class AdminRoleResourceServiceImpl implements AdminRoleResourceService{
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 		return 0;
 	}
@@ -54,7 +54,7 @@ public class AdminRoleResourceServiceImpl implements AdminRoleResourceService{
 			return adminRoleResourceMapper.findList(adminRoleResource);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -67,7 +67,7 @@ public class AdminRoleResourceServiceImpl implements AdminRoleResourceService{
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 		return null;
 	}
@@ -107,7 +107,7 @@ public class AdminRoleResourceServiceImpl implements AdminRoleResourceService{
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 		return null;
 	}	

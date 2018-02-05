@@ -10,14 +10,28 @@ import ringbackstage.common.enums.ResultCode;
 public class ResultException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private ResultCode resultCode;
-	public ResultException(ResultCode resultCode){
-		super(resultCode.getMsg());
+	private String errorMessage;
+	
+	public ResultException(ResultCode resultCode) {
+		super();
 		this.resultCode = resultCode;
 	}
+	public ResultException(ResultCode resultCode,String errorMessage){
+		super(resultCode.getMsg());
+		this.resultCode = resultCode;
+		this.errorMessage = errorMessage;
+	}
+	
 	public ResultCode getResultCode() {
 		return resultCode;
 	}
 	public void setResultCode(ResultCode resultCode) {
 		this.resultCode = resultCode;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 }

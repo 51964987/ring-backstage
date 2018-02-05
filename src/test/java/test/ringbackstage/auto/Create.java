@@ -60,12 +60,12 @@ public class Create {
 		indexftl = true;
 		operftl = false;
 		
-		String[] models = {"role","user"};
-		String[] ftlprefixs = {"roleresource","userrole"};
-		String[] modelNames = {"角色-资源","用户-角色"};
-		String[] tableNames = {"admin_role_resource","admin_user_role"};
-		boolean[] isCreateADUQ = {false,false};	//增删改查
-		boolean[] isCreateTrees = {true,true};	//树形
+		String[] models = {"log"};
+		String[] ftlprefixs = {"log"};
+		String[] modelNames = {"操作日志"};
+		String[] tableNames = {"admin_log"};
+		boolean[] isCreateADUQ = {true};	//增删改查
+		boolean[] isCreateTrees = {false};	//树形
 		for(int i=0;i<tableNames.length;i++){			
 			createFile(models[i], modelNames[i], tableNames[i],
 					isCreateTrees[i],isCreateADUQ[i],ftlprefixs[i]);

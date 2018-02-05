@@ -44,7 +44,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 			loginUser = userLoginMapper.findByLoginName(loginName);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 		if(loginUser != null){
 			//校验密码

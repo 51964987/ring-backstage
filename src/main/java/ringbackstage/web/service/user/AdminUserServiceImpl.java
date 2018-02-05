@@ -30,7 +30,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			return adminUserMapper.enabled(adminUser);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -52,7 +52,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			if(e instanceof DuplicateKeyException){
 				error = ResultCode.EXISTS_USER_ERROR;
 			}
-			throw new ResultException(error);
+			throw new ResultException(error,e.getMessage());
 		}
 	}
 
@@ -64,7 +64,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			return adminUserMapper.delete(adminUser);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -76,7 +76,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			return adminUserMapper.update(adminUser);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 
@@ -86,7 +86,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			return adminUserMapper.findById(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 	
@@ -96,7 +96,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			return adminUserMapper.findList(adminUser);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new ResultException(ResultCode.SERVER_ERROR);
+			throw new ResultException(ResultCode.SERVER_ERROR,e.getMessage());
 		}
 	}
 }

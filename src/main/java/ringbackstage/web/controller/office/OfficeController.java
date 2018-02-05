@@ -44,14 +44,16 @@ public class OfficeController {
 	@RequestMapping(value="add",method=RequestMethod.POST)
 	public Object addOper(AdminOffice office){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			setParentIds(office);
 			data = officeService.add(office,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode, errorMsg,data, RequestLocal.getStart().get());
 	}
 	//--/增加--//
 	
@@ -71,6 +73,7 @@ public class OfficeController {
 	@RequestMapping(value="delete/{id}",method=RequestMethod.POST)
 	public Object delete(@PathVariable String id){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			AdminOffice office = officeService.findById(id);
@@ -81,8 +84,9 @@ public class OfficeController {
 			}
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/删除--//
 	
@@ -97,14 +101,16 @@ public class OfficeController {
 	@RequestMapping(value="update",method=RequestMethod.POST)
 	public Object update(AdminOffice office){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			setParentIds(office);
 			data = officeService.update(office,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/修改--//
 	
@@ -122,10 +128,18 @@ public class OfficeController {
 			@RequestParam(required=false)Integer iDisplayLength,
 			AdminOffice office
 			) throws ResultException{
-		PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
-		List<AdminOffice> list = officeService.findList(office);
-		PageInfo<AdminOffice> pageInfo = new PageInfo<>(list);
-		return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
+		Map<String, Object> map = new HashMap<>();
+		try {
+			PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
+			List<AdminOffice> list = officeService.findList(office);
+			PageInfo<AdminOffice> pageInfo = new PageInfo<>(list);
+			return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
+		} catch (ResultException e) {
+			map.put("code", e.getResultCode().getCode());
+			map.put("message", e.getResultCode().getMsg());
+			map.put("errorMessage",e.getErrorMessage());
+		}
+		return map;
 	}
 	//--/未删除的列表--//
 	

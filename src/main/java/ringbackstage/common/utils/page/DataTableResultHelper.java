@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
+import ringbackstage.common.enums.ResultCode;
+
 /**
  * 用于返回dataTable插件数据
  *  
@@ -26,6 +28,8 @@ public class DataTableResultHelper {
 		map.put("iTotalRecords", (int)pageInfo.getTotal());
 		map.put("iTotalDisplayRecords", (int)pageInfo.getTotal());
 		map.put("aaData", pageInfo.getList());
+		map.put("code", ResultCode.SUCCESS.getCode());
+		map.put("message", ResultCode.SUCCESS.getMsg());
 		
 		if(logger.isDebugEnabled()){
 			logger.debug("page dataTable result :"+JSON.toJSONString(pageInfo.getList()));

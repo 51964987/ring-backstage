@@ -89,3 +89,20 @@ CREATE TABLE `admin_user_role`(
 	`role_id` varchar(64) NOT NULL COMMENT '角色ID',
 	PRIMARY KEY (`user_id`,`role_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-角色';
+
+
+DROP TABLE IF EXISTS `admin_log`;
+CREATE TABLE `admin_log`(
+	`id` varchar(64) NOT NULL COMMENT '编号',
+	`log_type` varchar(64) DEFAULT NULL COMMENT '日志类型',
+	`req_method` varchar(255) DEFAULT NULL COMMENT '请求方式',
+	`uri` varchar(255) DEFAULT NULL COMMENT '请求地址',
+	`req_params` text DEFAULT NULL COMMENT '请求参数',
+	`code` varchar(255) DEFAULT NULL COMMENT '日志状态',
+	`message` varchar(255) DEFAULT NULL COMMENT '日志信息',
+	`error_msg` text DEFAULT NULL COMMENT '异常信息',
+	`create_ip` varchar(255) DEFAULT NULL COMMENT '操作IP',
+	`create_date` datetime DEFAULT NULL COMMENT '操作时间',
+	`create_by` varchar(64) DEFAULT NULL COMMENT '操作人',
+	PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志表';

@@ -44,7 +44,7 @@ public class LoginController {
 			}
 			userLoginService.login(loginName, loginPwd,request);
 		} catch (ResultException e) {
-			model.put("error", e.getResultCode());
+			model.put("error", e);
 			return "login";
 		}
 		return "redirect:index";

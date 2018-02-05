@@ -44,14 +44,16 @@ public class AdminResourceController {
 	@RequestMapping(value="add",method=RequestMethod.POST)
 	public Object addOper(AdminResource adminResource){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			setParentIds(adminResource);
 			data = adminResourceService.add(adminResource,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 
 	//--/增加--//
@@ -70,6 +72,7 @@ public class AdminResourceController {
 	@RequestMapping(value="delete/{id}",method=RequestMethod.POST)
 	public Object delete(@PathVariable String id){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			AdminResource adminResource = adminResourceService.findById(id);
@@ -80,8 +83,9 @@ public class AdminResourceController {
 			}
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/删除--//
 	
@@ -96,14 +100,16 @@ public class AdminResourceController {
 	@RequestMapping(value="update",method=RequestMethod.POST)
 	public Object update(AdminResource adminResource){
 		ResultCode resultCode = ResultCode.SUCCESS;
+		String errorMsg = null;
 		int data = 0;
 		try {
 			setParentIds(adminResource);
 			data = adminResourceService.update(adminResource,RequestLocal.getUser().get());
 		} catch (ResultException e) {
 			resultCode = e.getResultCode();
+			errorMsg = e.getErrorMessage();
 		}
-		return ResultGenerator.result(resultCode, data, RequestLocal.getStart().get());
+		return ResultGenerator.result(resultCode,errorMsg, data, RequestLocal.getStart().get());
 	}
 	//--/修改--//
 	
@@ -121,10 +127,18 @@ public class AdminResourceController {
 			@RequestParam(required=false)Integer iDisplayLength,
 			AdminResource adminResource
 			) throws ResultException{
-		PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
-		List<AdminResource> list = adminResourceService.findList(adminResource);
-		PageInfo<AdminResource> pageInfo = new PageInfo<>(list);
-		return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
+		Map<String, Object> map = new HashMap<>();
+		try {
+			PageHelper.offsetPage(iDisplayStart, iDisplayLength, true);
+			List<AdminResource> list = adminResourceService.findList(adminResource);
+			PageInfo<AdminResource> pageInfo = new PageInfo<>(list);
+			return DataTableResultHelper.dataTableResult(sEcho+1, pageInfo);
+		} catch (ResultException e) {
+			map.put("code", e.getResultCode().getCode());
+			map.put("message", e.getResultCode().getMsg());
+			map.put("errorMessage",e.getErrorMessage());
+		}
+		return map;
 	}
 	//--/未删除的列表--//
 	
